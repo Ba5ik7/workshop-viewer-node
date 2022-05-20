@@ -34,6 +34,8 @@
 $ npm install
 ```
 
+Clone and follow the README of the workshop-view repo found <a href="https://github.com/Ba5ik7/workshop-viewer" target="_blank" >here</a>.
+
 ## Running the app
 
 ```bash
