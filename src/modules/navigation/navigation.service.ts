@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Section, SECTIONS } from './section.interface';
+import { Section, SECTIONS } from './interfaces/section.interface';
 
 @Injectable()
 export class NavigationService {
