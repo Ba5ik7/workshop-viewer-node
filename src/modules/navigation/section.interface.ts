@@ -43,14 +43,17 @@ const RXJS: string = 'rxjs';
 export const SECTIONS: { [key: string]: Section } = {
   [ANGULAR]: {
     name: 'Angular',
-    summary: 'Angular Material offers a wide variety of UI components based on the'
+    summary: 'Angular Material offers a wide variety of UI components based on the',
+    menuSvgPath: '/assets/img/angular-white-transparent.svg'
   },
   [NESTJS]: {
     name: 'Nest JS',
-    summary: 'The Component Dev Kit (CDK) is a set of behavior primitives for building UI' 
+    summary: 'The Component Dev Kit (CDK) is a set of behavior primitives for building UI' ,
+    menuSvgPath: '/assets/img/nestjs-white.svg'
   },
   [RXJS]: {
     name: 'RxJS',
-    summary: 'The Component Dev Kit (CDK) is a set of behavior primitives for building UI'
+    summary: 'The Component Dev Kit (CDK) is a set of behavior primitives for building UI',
+    menuSvgPath: '/assets/img/rxjs-white.svg'
   }
 };
