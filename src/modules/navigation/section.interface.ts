@@ -31,7 +31,7 @@
 
 
 export interface Section {
-  name: string;
+  sectionTitle: string;
   summary: string;
   menuSvgPath?: string;
   headerSvgPath?: string;
@@ -42,18 +42,21 @@ const NESTJS: string = 'nestjs';
 const RXJS: string = 'rxjs';
 export const SECTIONS: { [key: string]: Section } = {
   [ANGULAR]: {
-    name: 'Angular',
+    sectionTitle: 'Angular',
     summary: 'Angular Material offers a wide variety of UI components based on the',
-    menuSvgPath: '/assets/img/angular-white-transparent.svg'
+    menuSvgPath: '/assets/img/angular-white-transparent.svg',
+    headerSvgPath: '/assets/img/angular.svg'
   },
   [NESTJS]: {
-    name: 'Nest JS',
+    sectionTitle: 'Nest JS',
     summary: 'The Component Dev Kit (CDK) is a set of behavior primitives for building UI' ,
-    menuSvgPath: '/assets/img/nestjs-white.svg'
+    menuSvgPath: '/assets/img/nestjs-white.svg',
+    headerSvgPath: '/assets/img/nestjs.svg'
   },
   [RXJS]: {
-    name: 'RxJS',
+    sectionTitle: 'RxJS',
     summary: 'The Component Dev Kit (CDK) is a set of behavior primitives for building UI',
-    menuSvgPath: '/assets/img/rxjs-white.svg'
+    menuSvgPath: '/assets/img/rxjs-white.svg',
+    headerSvgPath: '/assets/img/rxjs.svg'
   }
 };
