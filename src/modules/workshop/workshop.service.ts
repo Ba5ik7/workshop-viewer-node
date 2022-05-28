@@ -4,7 +4,7 @@ import { EXAMPLE_DOCUMENT, WorkshopDocument } from './interfaces/workshop-docume
 @Injectable()
 export class WorkshopService {
 
-  getExampleDocument(): string {
+  getExampleDocument(): WorkshopDocument {
     return EXAMPLE_DOCUMENT
   }
 }

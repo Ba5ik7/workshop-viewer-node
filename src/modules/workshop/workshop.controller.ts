@@ -8,7 +8,7 @@ export class WorkshopController {
   constructor(private workshopService: WorkshopService){}
 
   @Get('example-document')
-  exampleDocument(): string {
+  exampleDocument(): WorkshopDocument {
 
     return this.workshopService.getExampleDocument();
   }
