@@ -1,4 +1,15 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
+import { WorkshopDocument } from './interfaces/workshop-document.interface';
+import { WorkshopService } from './workshop.service';
 
 @Controller('workshop')
-export class WorkshopController {}
+export class WorkshopController {
+
+  constructor(private workshopService: WorkshopService){}
+
+  @Get('example-document')
+  exampleDocument(): string {
+
+    return this.workshopService.getExampleDocument();
+  }
+}
