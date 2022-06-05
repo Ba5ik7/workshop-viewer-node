@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { EXAMPLE_DOCUMENT, WorkshopDocument } from './interfaces/workshop-document.interface';
+import { EXAMPLE_DOCUMENTS, WorkshopDocument } from './interfaces/workshop-document.interface';
 
 @Injectable()
 export class WorkshopService {
 
-  getExampleDocument(): WorkshopDocument {
-    return EXAMPLE_DOCUMENT
+  getExampleDocument(categoryId: string): WorkshopDocument {
+    return EXAMPLE_DOCUMENTS.find((category) => category.id === categoryId);
   }
 }

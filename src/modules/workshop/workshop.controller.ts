@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { WorkshopDocument } from './interfaces/workshop-document.interface';
 import { WorkshopService } from './workshop.service';
 
@@ -7,9 +7,8 @@ export class WorkshopController {
 
   constructor(private workshopService: WorkshopService){}
 
-  @Get('example-document')
-  exampleDocument(): WorkshopDocument {
-
-    return this.workshopService.getExampleDocument();
+  @Get('example-document/:categoryId')
+  exampleDocument(@Param('categoryId') categoryId): WorkshopDocument {
+    return this.workshopService.getExampleDocument(categoryId);
   }
 }

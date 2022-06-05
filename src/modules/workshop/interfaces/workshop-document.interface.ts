@@ -1,178 +1,83 @@
 export interface WorkshopDocument {
-  name: string,
+
+  id: string,
   lastUpdated: number,
   html: string
 }
 
-export const EXAMPLE_DOCUMENT: WorkshopDocument = {
-  name: 'example-document',
-  lastUpdated: 1653716532046,
-  html: `
-  <div class="docs-markdown"><p>The autocomplete is a normal text input enhanced by a panel of suggested options.</p>
-  
-          <h3 id="simple-autocomplete" class="docs-header-link">
-            <span header-link="simple-autocomplete"></span>
-            Simple autocomplete
-          </h3>
-        <p>Start by creating the autocomplete panel and the options displayed inside it. Each option should be
-  defined by a <code>mat-option</code> tag. Set each option&#39;s value property to whatever you&#39;d like the value
-  of the text input to be when that option is selected.</p>
-  <div workshop-live-example="workshop-live-example"
-                               file="workshop-live-example.html"></div>
-  
-  <p>Next, create the input and set the <code>matAutocomplete</code> input to refer to the template reference we assigned 
-  to the autocomplete. Let&#39;s assume you&#39;re using the <code>formControl</code> directive from <code>ReactiveFormsModule</code> to 
-  track the value of the input.</p>
-  <blockquote>
-  <p>Note: It is possible to use template-driven forms instead, if you prefer. We use reactive forms
-  in this example because it makes subscribing to changes in the input&#39;s value easy. For this
-  example, be sure to import <code>ReactiveFormsModule</code> from <code>@angular/forms</code> into your <code>NgModule</code>.
-  If you are unfamiliar with using reactive forms, you can read more about the subject in the
-  <a href="https://angular.io/guide/reactive-forms">Angular documentation</a>.</p>
-  </blockquote>
-  <p>Now we&#39;ll need to link the text input to its panel. We can do this by exporting the autocomplete
-  panel instance into a local template variable (here we called it &quot;auto&quot;), and binding that variable
-  to the input&#39;s <code>matAutocomplete</code> property.</p>
-  <div workshop-live-example="autocomplete-simple"
-                               file="autocomplete-simple-example.html"
-                               region="input"></div>
-  
-  
-          <h3 id="adding-a-custom-filter" class="docs-header-link">
-            <span header-link="adding-a-custom-filter"></span>
-            Adding a custom filter
-          </h3>
-        <p>At this point, the autocomplete panel should be toggleable on focus and options should be
-  selectable. But if we want our options to filter when we type, we need to add a custom filter.</p>
-  <p>You can filter the options in any way you like based on the text input*. Here we will perform a
-  simple string test on the option value to see if it matches the input value, starting from the
-  option&#39;s first letter. We already have access to the built-in <code>valueChanges</code> Observable on the
-  <code>FormControl</code>, so we can simply map the text input&#39;s values to the suggested options by passing
-  them through this filter. The resulting Observable, <code>filteredOptions</code>, can be added to the
-  template in place of the <code>options</code> property using the <code>async</code> pipe.</p>
-  <p>Below we are also priming our value change stream with an empty string so that the options are
-  filtered by that value on init (before there are any value changes).</p>
-  <p>*For optimal accessibility, you may want to consider adding text guidance on the page to explain
-  filter criteria. This is especially helpful for screenreader users if you&#39;re using a non-standard
-  filter that doesn&#39;t limit matches to the beginning of the string.</p>
-  <div workshop-live-example="autocomplete-filter"></div>
-  
-  
-          <h3 id="setting-separate-control-and-display-values" class="docs-header-link">
-            <span header-link="setting-separate-control-and-display-values"></span>
-            Setting separate control and display values
-          </h3>
-        <p>If you want the option&#39;s control value (what is saved in the form) to be different than the option&#39;s
-  display value (what is displayed in the text field), you&#39;ll need to set the <code>displayWith</code>
-  property on your autocomplete element. A common use case for this might be if you want to save your
-  data as an object, but display just one of the option&#39;s string properties.</p>
-  <p>To make this work, create a function on your component class that maps the control value to the
-  desired display value. Then bind it to the autocomplete&#39;s <code>displayWith</code> property.</p>
-  <div workshop-live-example="autocomplete-display"></div>
-  
-  
-          <h3 id="automatically-highlighting-the-first-option" class="docs-header-link">
-            <span header-link="automatically-highlighting-the-first-option"></span>
-            Automatically highlighting the first option
-          </h3>
-        <p>If your use case requires for the first autocomplete option to be highlighted when the user opens
-  the panel, you can do so by setting the <code>autoActiveFirstOption</code> input on the <code>mat-autocomplete</code>
-  component. This behavior can be configured globally using the <code>MAT_AUTOCOMPLETE_DEFAULT_OPTIONS</code>
-  injection token.</p>
-  <div workshop-live-example="autocomplete-auto-active-first-option"></div>
-  
-  
-          <h3 id="autocomplete-on-a-custom-input-element" class="docs-header-link">
-            <span header-link="autocomplete-on-a-custom-input-element"></span>
-            Autocomplete on a custom input element
-          </h3>
-        <p>While <code>mat-autocomplete</code> supports attaching itself to a <code>mat-form-field</code>, you can also set it on
-  any other <code>input</code> element using the <code>matAutocomplete</code> attribute. This allows you to customize what
-  the input looks like without having to bring in the extra functionality from <code>mat-form-field</code>.</p>
-  <div workshop-live-example="autocomplete-plain-input"></div>
-  
-  
-          <h3 id="attaching-the-autocomplete-panel-to-a-different-element" class="docs-header-link">
-            <span header-link="attaching-the-autocomplete-panel-to-a-different-element"></span>
-            Attaching the autocomplete panel to a different element
-          </h3>
-        <p>By default the autocomplete panel will be attached to your input element, however in some cases you
-  may want it to attach to a different container element. You can change the element that the
-  autocomplete is attached to using the <code>matAutocompleteOrigin</code> directive together with the
-  <code>matAutocompleteConnectedTo</code> input:</p>
-  <pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;custom-wrapper-example&quot;</span> <span class="hljs-attr">matAutocompleteOrigin</span> #<span class="hljs-attr">origin</span>=<span class="hljs-string">&quot;matAutocompleteOrigin&quot;</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">input</span>
-      <span class="hljs-attr">matInput</span>
-      [<span class="hljs-attr">formControl</span>]=<span class="hljs-string">&quot;myControl&quot;</span>
-      [<span class="hljs-attr">matAutocomplete</span>]=<span class="hljs-string">&quot;auto&quot;</span>
-      [<span class="hljs-attr">matAutocompleteConnectedTo</span>]=<span class="hljs-string">&quot;origin&quot;</span>&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-  
-  <span class="hljs-tag">&lt;<span class="hljs-name">mat-autocomplete</span> #<span class="hljs-attr">auto</span>=<span class="hljs-string">&quot;matAutocomplete&quot;</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">mat-option</span> *<span class="hljs-attr">ngFor</span>=<span class="hljs-string">&quot;let option of options&quot;</span> [<span class="hljs-attr">value</span>]=<span class="hljs-string">&quot;option&quot;</span>&gt;</span>{{option}}<span class="hljs-tag">&lt;/<span class="hljs-name">mat-option</span>&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-name">mat-autocomplete</span>&gt;</span>
-  </code></pre>
-  
-          <h3 id="keyboard-interaction" class="docs-header-link">
-            <span header-link="keyboard-interaction"></span>
-            Keyboard interaction
-          </h3>
-        <table>
-  <thead>
-  <tr>
-  <th>Keyboard shortcut</th>
-  <th>Action</th>
-  </tr>
-  </thead>
-  <tbody><tr>
-  <td><kbd>Down Arrow</kbd></td>
-  <td>Navigate to the next option.</td>
-  </tr>
-  <tr>
-  <td><kbd>Up Arrow</kbd></td>
-  <td>Navigate to the previous option.</td>
-  </tr>
-  <tr>
-  <td><kbd>Enter</kbd></td>
-  <td>Select the active option.</td>
-  </tr>
-  <tr>
-  <td><kbd>Escape</kbd></td>
-  <td>Close the autocomplete panel.</td>
-  </tr>
-  <tr>
-  <td><kbd>Alt</kbd> + <kbd>Up Arrow</kbd></td>
-  <td>Close the autocomplete panel.</td>
-  </tr>
-  <tr>
-  <td><kbd>Alt</kbd> + <kbd>Down Arrow</kbd></td>
-  <td>Open the autocomplete panel if there are any matching options.</td>
-  </tr>
-  </tbody></table>
-  
-          <h3 id="option-groups" class="docs-header-link">
-            <span header-link="option-groups"></span>
-            Option groups
-          </h3>
-        <p><code>mat-option</code> can be collected into groups using the <code>mat-optgroup</code> element:</p>
-  <div workshop-live-example="autocomplete-optgroup"
-                               file="autocomplete-optgroup-example.html"
-                               region="mat-autocomplete"></div>
-  
-  
-          <h3 id="accessibility" class="docs-header-link">
-            <span header-link="accessibility"></span>
-            Accessibility
-          </h3>
-        <p><code>MatAutocomplete</code> implements the ARIA combobox interaction pattern. The text input trigger specifies
-  <code>role=&quot;combobox&quot;</code> while the content of the pop-up applies <code>role=&quot;listbox&quot;</code>. Because of this listbox
-  pattern, you should <em>not</em> put other interactive controls, such as buttons or checkboxes, inside
-  an autocomplete option. Nesting interactive controls like this interferes with most assistive
-  technology.</p>
-  <p>Always provide an accessible label for the autocomplete. This can be done by using a
-  <code>&lt;mat-label&gt;</code> inside of <code>&lt;mat-form-field&gt;</code>, a native <code>&lt;label&gt;</code> element, the <code>aria-label</code>
-  attribute, or the <code>aria-labelledby</code> attribute.</p>
-  <p><code>MatAutocomplete</code> preserves focus on the text trigger, using <code>aria-activedescendant</code> to support
-  navigation though the autocomplete options.</p>
-  </div>`  
-}
+export const EXAMPLE_DOCUMENTS: WorkshopDocument[] = [
+  {
+    id: 'example',
+    lastUpdated: 1653716532046,
+    html: `
+    <h1>Testing portal lazy loaded components</h1>
+    <p>Should see something under me</p>
+    <div workshop-live-example="workshop-live-examples" "file="workshop-live-example.html"></div>`
+  },
+  {
+    id: 'route-reuse-strategy',
+    lastUpdated: 1653716532046,
+    html: `
+    <div class="page">
+      <section class="container">
+        <mat-card>
+          <h1>Overview</h1>
+          <p>Angular, out of the box, has a powerful router that simply displays new components when accessing different URLs within the application. However, there are situations that the default functionality of the router can fall short of meeting business requirements. Like cracking an egg, there are numerous ways to work around some of this short coming. In this workshop we are going to look at the RouteReuseStrategy and how to use it to manipulate the default functionality of the Angular router. We will cover two scenarios in this workshop that Angular developers commonly use.</p>
+        </mat-card>
+        <mat-card>
+          <h1>RouteReuseStrategy</h1>
+          <p>There is an abstract class RouteReuseStrategy within Angular codebase that dictates how and when components are created, saved, and destroyed during routing lifecycle. Angular by default uses the RouteReuseStrategy.</p>
+          <p>Let's look at the default methods of the class below:</p>
+          <highlight-card [code]="code"></highlight-card>
+          <p>Directly from Angular documents:</p>
+          <p><i>This base route reuse strategy only reuses routes when the matched router configs are identical. This prevents components from being destroyed and recreated when just the fragment or query parameters change (that is, the existing component is reused).</i></p>
+          <p>Basically, component lifecycles will NOT be triggered if the component is being reused on query routes. We will talk about these methods and how we can use them to enhance the Angular router to meet our edge cases.</p>
+        </mat-card>
+        <mat-card>
+          <h1>Custom Implementation</h1>
+          <p>To add a custom implementation of the RouteReuseStrategy, you need to complete this two-step process:</p>
+          <p>1. Create a class that extends the RouteReuseStrategy and then implement the required methods in order to extend the abstract class:</p>
+          <highlight-card [code]="code2"></highlight-card>
+          <p><i>Note: The methods' logic we added is the same as the default Angular logic.</i></p>
+          <p>2. Create a provider to inject your custom class in your application's main module:</p>
+          <highlight-card [code]="code3"></highlight-card>
+          <p><i>Important to note that when adding a route strategy as a provider, you must ONLY do so in the top-level component's module.</i></p>
+        </mat-card>
+        <mat-card>
+          <h1>Example Situation</h1>
+          <p>A common situation in web applications is a parent-detail relationship. Where some “parent” page (e.g. search results) is displaying a list of items which the user can click to view the details. Using this pattern, we are going to set a few limitations on how we want the application to perform:</p>
+          <ul>
+            <li>The parent page should have some state that should be preserved between viewing details (such as sorting, filtering, etc.)</li>
+            <li>The detail is viewable via a distinct URL containing an ID for the detail record.</li>
+            <li>The detail view should load the detail's content and be able to run some initialization logic.</li>
+            <li>The components will need to run cleanup code when destroyed such as unsubscribing from observables.</li>
+          </ul>
+          <p>We will implement two common design patterns used in Angular development. Each will have drawbacks. In those areas, we will use our custom RouteReuseStrategy to fill in those gaps.</p>
+        </mat-card>
+        <mat-card>
+          <h1>Shared Components</h1>
+          <p>Both approaches will use the same detail component and will extent a base class for the parent pages. These examples will share as much logic as possible between the scenarios to help focus on the different approaches rather than the component's logic.</p>
+          <p><b>Shared Parent Class</b><br>The base abstract class to be used by the parent pages:</p>
+          <highlight-card [code]="code4"></highlight-card>
+          <p>There are a few things happening in this component to take note of:</p>
+          <ol>
+            <li>OnInit we are generating a list of random numbers to emulate state.</li>
+            <li>OnDestroy we are logging an identifier to emulate a teardown of an observable</li>
+          </ol>
+          <p><b>Shared Detail Component</b><br>Both approaches will use the same detail component:</p>
+          <highlight-card [code]="code5"></highlight-card>
+          <p>There are a few things happening in this component to take note of:</p>
+          <ol>
+            <li>OnInit we get the route parameters from the URL to display in the view - this emulates any data loading for the detail from a back-end service</li>
+            <li>Also generates a new random value to display in the view - this represents some view initialization for the detail page</li>
+            <li>OnDestroy same as the shared parent class logging an identifier</li>
+          </ol>
+        </mat-card>
+        <mat-card class="next-section-button" routerLink="/parent-child-design">
+          Next Section: Parent-Child Design
+          <mat-icon>arrow_forward</mat-icon>
+        </mat-card>
+      </section>
+    </div>`
+  }
+]

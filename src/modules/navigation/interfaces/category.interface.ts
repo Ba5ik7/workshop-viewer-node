@@ -35,31 +35,22 @@ const RXJS: string = 'rxjs';
 export const  CATEGORIES: { [key: string]: Category[] } = {
   [ANGULAR]: [
     {
-      id: 'autocomplete',
-      name: 'Autocomplete',
-      summary: 'Suggests relevant options as the user types.',
+      id: 'example',
+      name: 'Example',
+      summary: 'This is a example',
       exampleSpecs: {
-        prefix: 'autocomplete-',
+        prefix: 'example-',
       },
-      additionalApiDocs: [{name: 'Testing', path: 'material-autocomplete-testing.html'}],
+      additionalApiDocs: [{name: '', path: ''}],
     },
     {
-      id: 'badge',
-      name: 'Badge',
-      summary: 'A small value indicator that can be overlaid on another object.',
+      id: 'route-reuse-strategy',
+      name: 'Route Reuse Strategy',
+      summary: 'Angular, out of the box, has a powerful router that simply displays new components when accessing different URLs within the application.',
       exampleSpecs: {
-        prefix: 'badge-',
+        prefix: 'routereusestrategy-',
       },
-      additionalApiDocs: [{name: 'Testing', path: 'material-badge-testing.html'}],
-    },
-    {
-      id: 'bottom-sheet',
-      name: 'Bottom Sheet',
-      summary: 'A large interactive panel primarily for mobile devices.',
-      exampleSpecs: {
-        prefix: 'bottom-sheet-',
-      },
-      additionalApiDocs: [{name: 'Testing', path: 'material-bottom-sheet-testing.html'}],
+      additionalApiDocs: [{name: '', path: ''}],
     }
   ],
   [NESTJS]: [
