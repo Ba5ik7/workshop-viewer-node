@@ -10,9 +10,13 @@ export const EXAMPLE_DOCUMENTS: WorkshopDocument[] = [
     id: 'example',
     lastUpdated: 1653716532046,
     html: `
-    <h1>Testing portal lazy loaded components</h1>
-    <p>Should see something under me</p>
-    <div workshop-live-example="workshop-live-examples" "file="workshop-live-example.html"></div>`
+    <div class="page">
+      <section class="container">
+        <h1>Testing portal lazy loaded components</h1>
+        <p>Should see something under me</p>
+        <div workshop-live-example="workshop-live-examples" "file="workshop-live-example.html"></div>
+      </div>
+    </div>`
   },
   {
     id: 'route-reuse-strategy',
@@ -20,30 +24,67 @@ export const EXAMPLE_DOCUMENTS: WorkshopDocument[] = [
     html: `
     <div class="page">
       <section class="container">
-        <mat-card>
+        <div class="mat-card">
           <h1>Overview</h1>
           <p>Angular, out of the box, has a powerful router that simply displays new components when accessing different URLs within the application. However, there are situations that the default functionality of the router can fall short of meeting business requirements. Like cracking an egg, there are numerous ways to work around some of this short coming. In this workshop we are going to look at the RouteReuseStrategy and how to use it to manipulate the default functionality of the Angular router. We will cover two scenarios in this workshop that Angular developers commonly use.</p>
-        </mat-card>
-        <mat-card>
+        </div>
+        <div class="mat-card">
           <h1>RouteReuseStrategy</h1>
           <p>There is an abstract class RouteReuseStrategy within Angular codebase that dictates how and when components are created, saved, and destroyed during routing lifecycle. Angular by default uses the RouteReuseStrategy.</p>
           <p>Let's look at the default methods of the class below:</p>
-          <highlight-card [code]="code"></highlight-card>
+          <code-highlighter>
+            <pre>
+              <code>
+abstract class BaseRouteReuseStrategy implements RouteReuseStrategy {
+  shouldDetach(route: ActivatedRouteSnapshot): boolean
+  store(route: ActivatedRouteSnapshot, detachedTree: DetachedRouteHandle): void
+  shouldAttach(route: ActivatedRouteSnapshot): boolean
+  retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle | null
+  shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean
+}
+              </code>
+            </pre>
+          </code-highlighter>
           <p>Directly from Angular documents:</p>
           <p><i>This base route reuse strategy only reuses routes when the matched router configs are identical. This prevents components from being destroyed and recreated when just the fragment or query parameters change (that is, the existing component is reused).</i></p>
           <p>Basically, component lifecycles will NOT be triggered if the component is being reused on query routes. We will talk about these methods and how we can use them to enhance the Angular router to meet our edge cases.</p>
-        </mat-card>
-        <mat-card>
+        </div>
+        <div class="mat-card">
           <h1>Custom Implementation</h1>
           <p>To add a custom implementation of the RouteReuseStrategy, you need to complete this two-step process:</p>
           <p>1. Create a class that extends the RouteReuseStrategy and then implement the required methods in order to extend the abstract class:</p>
-          <highlight-card [code]="code2"></highlight-card>
+          <code-highlighter>
+            <pre>
+              <code>
+export class CustomReuseStrategy extends RouteReuseStrategy {
+  shouldDetach(route: ActivatedRouteSnapshot): boolean { return false; }
+  store(route: ActivatedRouteSnapshot, handle: DetachedRouteHandle | null): void { }
+  
+  shouldAttach(route: ActivatedRouteSnapshot): boolean { return false; }  
+  retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle | null { return null; }
+  shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
+    return future.routeConfig === curr.routeConfig;
+  }
+}
+              </code>
+            </pre>
+          </code-highlighter>
           <p><i>Note: The methods' logic we added is the same as the default Angular logic.</i></p>
           <p>2. Create a provider to inject your custom class in your application's main module:</p>
-          <highlight-card [code]="code3"></highlight-card>
+          <code-highlighter>
+            <pre>
+              <code>
+@NgModule({
+  ...
+  providers: [
+    { provide: RouteReuseStrategy, useClass: CustomReuseStrategy }
+]})
+              </code>
+            </pre>
+          </code-highlighter>
           <p><i>Important to note that when adding a route strategy as a provider, you must ONLY do so in the top-level component's module.</i></p>
-        </mat-card>
-        <mat-card>
+        </div>
+        <div class="mat-card">
           <h1>Example Situation</h1>
           <p>A common situation in web applications is a parent-detail relationship. Where some “parent” page (e.g. search results) is displaying a list of items which the user can click to view the details. Using this pattern, we are going to set a few limitations on how we want the application to perform:</p>
           <ul>
@@ -53,8 +94,8 @@ export const EXAMPLE_DOCUMENTS: WorkshopDocument[] = [
             <li>The components will need to run cleanup code when destroyed such as unsubscribing from observables.</li>
           </ul>
           <p>We will implement two common design patterns used in Angular development. Each will have drawbacks. In those areas, we will use our custom RouteReuseStrategy to fill in those gaps.</p>
-        </mat-card>
-        <mat-card>
+        </div>
+        <div class="mat-card">
           <h1>Shared Components</h1>
           <p>Both approaches will use the same detail component and will extent a base class for the parent pages. These examples will share as much logic as possible between the scenarios to help focus on the different approaches rather than the component's logic.</p>
           <p><b>Shared Parent Class</b><br>The base abstract class to be used by the parent pages:</p>
@@ -72,11 +113,11 @@ export const EXAMPLE_DOCUMENTS: WorkshopDocument[] = [
             <li>Also generates a new random value to display in the view - this represents some view initialization for the detail page</li>
             <li>OnDestroy same as the shared parent class logging an identifier</li>
           </ol>
-        </mat-card>
-        <mat-card class="next-section-button" routerLink="/parent-child-design">
+        </div>
+        <div class="mat-card workshop-next-page-button" routerLink="/parent-child-design">
           Next Section: Parent-Child Design
           <mat-icon>arrow_forward</mat-icon>
-        </mat-card>
+        </div>
       </section>
     </div>`
   }
