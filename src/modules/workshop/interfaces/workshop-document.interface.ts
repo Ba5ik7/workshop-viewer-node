@@ -32,19 +32,14 @@ export const EXAMPLE_DOCUMENTS: WorkshopDocument[] = [
           <h1>RouteReuseStrategy</h1>
           <p>There is an abstract class RouteReuseStrategy within Angular codebase that dictates how and when components are created, saved, and destroyed during routing lifecycle. Angular by default uses the RouteReuseStrategy.</p>
           <p>Let's look at the default methods of the class below:</p>
-          <code-highlighter>
-            <pre>
-              <code>
-abstract class BaseRouteReuseStrategy implements RouteReuseStrategy {
+          <highlight-card [code]="code"></highlight-card>
+          <div code-highlighter code="abstract class BaseRouteReuseStrategy implements RouteReuseStrategy {
   shouldDetach(route: ActivatedRouteSnapshot): boolean
   store(route: ActivatedRouteSnapshot, detachedTree: DetachedRouteHandle): void
   shouldAttach(route: ActivatedRouteSnapshot): boolean
   retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle | null
   shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean
-}
-              </code>
-            </pre>
-          </code-highlighter>
+}" ></div>
           <p>Directly from Angular documents:</p>
           <p><i>This base route reuse strategy only reuses routes when the matched router configs are identical. This prevents components from being destroyed and recreated when just the fragment or query parameters change (that is, the existing component is reused).</i></p>
           <p>Basically, component lifecycles will NOT be triggered if the component is being reused on query routes. We will talk about these methods and how we can use them to enhance the Angular router to meet our edge cases.</p>
@@ -53,10 +48,7 @@ abstract class BaseRouteReuseStrategy implements RouteReuseStrategy {
           <h1>Custom Implementation</h1>
           <p>To add a custom implementation of the RouteReuseStrategy, you need to complete this two-step process:</p>
           <p>1. Create a class that extends the RouteReuseStrategy and then implement the required methods in order to extend the abstract class:</p>
-          <code-highlighter>
-            <pre>
-              <code>
-export class CustomReuseStrategy extends RouteReuseStrategy {
+          <div code-highlighter code="export class CustomReuseStrategy extends RouteReuseStrategy {
   shouldDetach(route: ActivatedRouteSnapshot): boolean { return false; }
   store(route: ActivatedRouteSnapshot, handle: DetachedRouteHandle | null): void { }
   
@@ -65,23 +57,14 @@ export class CustomReuseStrategy extends RouteReuseStrategy {
   shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
     return future.routeConfig === curr.routeConfig;
   }
-}
-              </code>
-            </pre>
-          </code-highlighter>
+}"></div>
           <p><i>Note: The methods' logic we added is the same as the default Angular logic.</i></p>
           <p>2. Create a provider to inject your custom class in your application's main module:</p>
-          <code-highlighter>
-            <pre>
-              <code>
-@NgModule({
+          <div code-highlighter code="@NgModule({
   ...
   providers: [
     { provide: RouteReuseStrategy, useClass: CustomReuseStrategy }
-]})
-              </code>
-            </pre>
-          </code-highlighter>
+]})"></div>
           <p><i>Important to note that when adding a route strategy as a provider, you must ONLY do so in the top-level component's module.</i></p>
         </div>
         <div class="mat-card">
