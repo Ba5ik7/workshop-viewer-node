@@ -14,7 +14,7 @@ export const EXAMPLE_DOCUMENTS: WorkshopDocument[] = [
       <section class="container">
         <h1>Testing portal lazy loaded components</h1>
         <p>Should see something under me</p>
-        <div workshop-live-example="workshop-live-examples" "file="workshop-live-example.html"></div>
+        <div workshop-live-example="solution-one" "file="workshop-live-example.html"></div>
       </div>
     </div>`
   },
