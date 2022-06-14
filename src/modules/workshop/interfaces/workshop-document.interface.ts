@@ -97,10 +97,7 @@ export const EXAMPLE_DOCUMENTS: WorkshopDocument[] = [
             <li>OnDestroy same as the shared parent class logging an identifier</li>
           </ol>
         </div>
-        <div class="mat-card workshop-next-page-button" routerLink="/parent-child-design">
-          Next Section: Parent-Child Design
-          <mat-icon>arrow_forward</mat-icon>
-        </div>
+	<next-page title="Next Section: Parent-Child Design" icon="arrow_forward" click-event="0"></next-page>
       </section>
     </div>`
   }
