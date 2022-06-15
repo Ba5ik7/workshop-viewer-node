@@ -97,7 +97,7 @@ export const EXAMPLE_DOCUMENTS: WorkshopDocument[] = [
             <li>OnDestroy same as the shared parent class logging an identifier</li>
           </ol>
         </div>
-	<next-page title="Next Section: Parent-Child Design" icon="arrow_forward" click-event="0"></next-page>
+	      <next-page title="Next Section: Parent-Child Design" icon="arrow_forward" click-event="1"></next-page>
       </section>
     </div>`
   }
