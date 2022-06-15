@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import mongodbPw from '../mongodbPw.json';
+import * as mongodbPw from '../mongodbPw.json';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
