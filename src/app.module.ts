@@ -10,7 +10,7 @@ import { WorkshopModule } from './modules/workshop/workshop.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(`mongodb://${mongodbPw.user}:${mongodbPw.pw}@${mongodbPw.ip}:${mongodbPw.port}`),
+    MongooseModule.forRoot(`mongodb://${mongodbPw.user}:${mongodbPw.pw}@${mongodbPw.ip}/workshop-viewer:${mongodbPw.port}`),
     NavigationModule,
     WorkshopModule
   ],
