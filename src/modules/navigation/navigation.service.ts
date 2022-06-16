@@ -1,15 +1,24 @@
 import { Injectable } from '@nestjs/common';
-import { Category, CATEGORIES } from './interfaces/category.interface';
-import { Section, SECTIONS } from './interfaces/section.interface';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Section, SectionDocument } from './schemas/section.schema';
+// import { Category, CATEGORIES } from './interfaces/category.interface';
+// import { Section, SECTIONS } from './interfaces/section.interface';
 
 @Injectable()
 export class NavigationService {
 
-  getAllSections(): { [key: string]: Section } { 
-    return SECTIONS;
-  }
+  constructor(@InjectModel(Section.name) private sectionModel: Model<SectionDocument>) {}
 
-  getAllCategories(): { [key: string]: Category[] } { 
-    return CATEGORIES;
+  // getAllSections(): { [key: string]: Section } { 
+  //   return SECTIONS;
+  // }
+
+  // getAllCategories(): { [key: string]: Category[] } { 
+  //   return CATEGORIES;
+  // }
+
+  async findAllSections(): Promise<Section[]> {
+    return this.sectionModel.find().exec();
   }
 }
