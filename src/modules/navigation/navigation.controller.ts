@@ -1,8 +1,9 @@
 import { Controller, Get } from '@nestjs/common';
 import { NavigationService } from './navigation.service';
+import { Category } from './schemas/category.schema';
 // import { Section } from './interfaces/section.interface';
 // import { Category } from './interfaces/category.interface';
-import { Section, SectionDocument } from './schemas/section.schema';
+import { Section } from './schemas/section.schema';
 
 @Controller('navigation')
 export class NavigationController {
@@ -21,5 +22,10 @@ export class NavigationController {
   @Get('sections')
   async sections(): Promise<Section[]> {
     return this.navigationService.findAllSections();
+  }
+
+  @Get('categories')
+  async categories(): Promise<Category[]> {
+    return this.navigationService.findAllCategories();
   }
 }
