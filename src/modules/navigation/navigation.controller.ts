@@ -21,6 +21,7 @@ export class NavigationController {
 
   @Get('sections')
   async sections(): Promise<Section[]> {
+
     return this.navigationService.findAllSections();
   }
 
