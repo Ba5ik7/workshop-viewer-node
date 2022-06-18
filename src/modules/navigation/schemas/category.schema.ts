@@ -28,7 +28,7 @@ export class Category {
   additionalApiDocs: string;
 
   @Prop()
-  workshopDocuments: string;
+  workshopDocuments: string[];
 
   @Prop()
   workshopDocumentsLastUpdated: string;
