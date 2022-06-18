@@ -1,12 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 
 export type SectionDocument = Section & Document;
 
 @Schema()
 export class Section {
   @Prop()
-  _id: string;
+  _id: Types.ObjectId;
 
   @Prop()
   sectionTitle: string;
