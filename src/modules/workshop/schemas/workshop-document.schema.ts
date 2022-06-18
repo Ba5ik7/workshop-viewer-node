@@ -9,23 +9,13 @@ export class WorkshopDocument {
   _id: Types.ObjectId;
 
   @Prop()
-  WorkshopDocumentTitle: string;
+  id: string;
 
   @Prop()
-  summary: number;
+  lastUpdated: number;
 
   @Prop()
-  menuSvgPath: string;
-
-  @Prop()
-  headerSvgPath: string;
-
-  @Prop()
-  categoriesLastUpdated: string;
-  // {
-  //   type: Date,
-  //   default: () => Date.now()
-  // }
+  html: string;  
 }
 
 export const WorkshopDocumentSchema = SchemaFactory.createForClass(WorkshopDocument);

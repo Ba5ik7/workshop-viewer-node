@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { WorkshopDocument, WorkshopDocumentSchema } from './schemas/workshop-document';
+import { WorkshopDocument, WorkshopDocumentSchema } from './schemas/workshop-document.schema';
 import { WorkshopController } from './workshop.controller';
 import { WorkshopService } from './workshop.service';
 
