@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { ISection } from './interfaces/section.interface';
 import { Category, CategoryDocument } from './schemas/category.schema';
 import { Section, SectionDocument } from './schemas/section.schema';
-// import { Category, CATEGORIES } from './interfaces/category.interface';
-// import { Section, SECTIONS } from './interfaces/section.interface';
 
 @Injectable()
 export class NavigationService {
@@ -14,19 +13,14 @@ export class NavigationService {
     @InjectModel(Category.name) private categoryModel: Model<CategoryDocument>
     ) {}
 
-  // getAllSections(): { [key: string]: Section } { 
-  //   return SECTIONS;
-  // }
-
-  // getAllCategories(): { [key: string]: Category[] } { 
-  //   return CATEGORIES;
-  // }
-
-  async findAllSections(): Promise<Section[]> {
-    return this.sectionModel.find().exec();
+  async findAllSections(): Promise<{ [key: string]: ISection }> {
+    const sections = await this.sectionModel.find().exec();
+    const sectionFormatToObject = sections
+    .reduce((acc, cur) => ({ ...acc, [cur._id]: cur }), {});
+    return Promise.resolve(sectionFormatToObject);
   }
 
-  async findAllCategories(): Promise<Category[]> {
-    return this.categoryModel.find().exec();
+  async findAllCategoriesInSection(section: string): Promise<Category[]> {
+    return this.categoryModel.where('section_id').equals(section);
   }
 }

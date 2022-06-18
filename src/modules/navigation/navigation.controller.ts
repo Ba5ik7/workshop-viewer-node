@@ -1,32 +1,22 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
+import { ISection } from './interfaces/section.interface';
 import { NavigationService } from './navigation.service';
 import { Category } from './schemas/category.schema';
-// import { Section } from './interfaces/section.interface';
-// import { Category } from './interfaces/category.interface';
 import { Section } from './schemas/section.schema';
 
 @Controller('navigation')
 export class NavigationController {
   constructor(private navigationService: NavigationService){}
 
-  // @Get('sections')
-  // sections(): { [key: string]: Section } {
-  //   return this.navigationService.getAllSections();
-  // }
-  
-  // @Get('categories')
-  // categories(): { [key: string]: Category[] } {
-  //   return this.navigationService.getAllCategories();
-  // }
-
   @Get('sections')
-  async sections(): Promise<Section[]> {
-
+  async sections(): Promise<{ [key: string]: ISection }> { 
     return this.navigationService.findAllSections();
   }
 
-  @Get('categories')
-  async categories(): Promise<Category[]> {
-    return this.navigationService.findAllCategories();
+  @Get('categories:section')
+  async categories(
+    @Param('section') section: string
+  ): Promise<Category[]> {
+    return this.navigationService.findAllCategoriesInSection(section);
   }
 }

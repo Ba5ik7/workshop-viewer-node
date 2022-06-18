@@ -6,6 +6,9 @@ export type SectionDocument = Section & Document;
 @Schema()
 export class Section {
   @Prop()
+  _id: string;
+
+  @Prop()
   sectionTitle: string;
 
   @Prop()
@@ -19,6 +22,10 @@ export class Section {
 
   @Prop()
   categoriesLastUpdated: string;
+  // {
+  //   type: Date,
+  //   default: () => Date.now()
+  // }
 }
 
 export const SectionSchema = SchemaFactory.createForClass(Section);

@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 
 export type CategoryDocument = Category & Document;
 
@@ -7,6 +7,13 @@ export type CategoryDocument = Category & Document;
 export class Category {
   @Prop()
   id: string;
+
+  @Prop()
+  section_id: string;
+  // {
+  //   type: mongoose.SchemaType.ObjectId,
+  //   ref: 'Section'
+  // };
 
   @Prop()
   name: number;
