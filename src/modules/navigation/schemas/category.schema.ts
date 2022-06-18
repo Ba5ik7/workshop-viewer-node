@@ -1,10 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { Document } from 'mongoose';
+import { Document } from 'mongoose';
+import { Types } from 'mongoose';
 
 export type CategoryDocument = Category & Document;
 
 @Schema()
 export class Category {
+  @Prop()
+  _id: Types.ObjectId;
+
   @Prop()
   id: string;
 

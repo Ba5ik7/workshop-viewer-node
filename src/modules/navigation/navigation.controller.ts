@@ -8,12 +8,12 @@ export class NavigationController {
   constructor(private navigationService: NavigationService){}
 
   @Get('sections')
-  async sections(): Promise<{ [key: string]: ISection }> { 
+  sections(): Promise<{ [key: string]: ISection }> { 
     return this.navigationService.findAllSections();
   }
 
   @Get('categories')
-  async categories(
+  categories(
     @Query('section') section: string
   ): Promise<Category[]> {
     return this.navigationService.findAllCategoriesInSection(section);

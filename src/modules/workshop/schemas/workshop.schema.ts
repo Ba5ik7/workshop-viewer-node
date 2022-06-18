@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
-export type WorkshopDocumentT = WorkshopDocument & Document;
+export type WorkshopDocument = Workshop & Document;
 
 @Schema()
-export class WorkshopDocument {
+export class Workshop {
   @Prop()
   _id: Types.ObjectId;
 
@@ -18,4 +18,4 @@ export class WorkshopDocument {
   html: string;  
 }
 
-export const WorkshopDocumentSchema = SchemaFactory.createForClass(WorkshopDocument);
+export const WorkshopSchema = SchemaFactory.createForClass(Workshop);
