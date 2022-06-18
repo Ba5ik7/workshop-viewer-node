@@ -1,6 +1,8 @@
 import { Types } from 'mongoose';
 
-export interface User {
+export interface IUser {
   lastUpdated: number,
-  html: string
+  html: string,
+  createdAt: Date,
+  updatedAt: Date
 }
