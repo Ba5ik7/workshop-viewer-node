@@ -16,7 +16,7 @@ export class Category {
   // };
 
   @Prop()
-  name: number;
+  name: string;
 
   @Prop()
   summary: string;
