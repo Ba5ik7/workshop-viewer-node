@@ -10,21 +10,21 @@ export class AuthController {
 
   @Post('local/signup')
   localSignup() {
-
+    this.authService.localSignup();
   }
 
   @Post('local/login')
   localLogin() {
-    
+    this.authService.localLogin();
   }
 
   @Post('logout')
-  localLogout() {
-    
+  logout() {
+    this.authService.logout();
   }
 
   @Post('refresh')
   refresh() {
-    
+    this.authService.refresh();
   }
 }
