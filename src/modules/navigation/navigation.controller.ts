@@ -1,8 +1,7 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { ISection } from './interfaces/section.interface';
 import { NavigationService } from './navigation.service';
 import { Category } from './schemas/category.schema';
-import { Section } from './schemas/section.schema';
 
 @Controller('navigation')
 export class NavigationController {
@@ -13,9 +12,9 @@ export class NavigationController {
     return this.navigationService.findAllSections();
   }
 
-  @Get('categories:section')
+  @Get('categories')
   async categories(
-    @Param('section') section: string
+    @Query('section') section: string
   ): Promise<Category[]> {
     return this.navigationService.findAllCategoriesInSection(section);
   }
