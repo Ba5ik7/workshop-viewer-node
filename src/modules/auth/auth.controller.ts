@@ -1,5 +1,6 @@
-import { Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { IUser } from './interfaces/user.interface';
 
 @Controller('auth')
 export class AuthController {
@@ -8,9 +9,11 @@ export class AuthController {
     private authService: AuthService
   ) {}
 
-  @Post('local/signup')
-  localSignup() {
-    this.authService.localSignup();
+  @Post('local/create-account')
+  createAccount(@Body() user): Promise<IUser> {
+    console.log(user);
+    
+    return this.authService.createAccount(user);
   }
 
   @Post('local/login')
