@@ -1,4 +1,5 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UseFilters } from '@nestjs/common';
+import { MongooseFilter } from 'src/filters/mongoose.filter';
 import { AuthService } from './auth.service';
 import { IUser } from './interfaces/user.interface';
 
@@ -10,9 +11,8 @@ export class AuthController {
   ) {}
 
   @Post('local/create-account')
+  @UseFilters(MongooseFilter)
   createAccount(@Body() user): Promise<IUser> {
-    console.log(user);
-    
     return this.authService.createAccount(user);
   }
 
