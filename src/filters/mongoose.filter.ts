@@ -18,7 +18,6 @@ export class MongooseFilter implements ExceptionFilter {
         timestamp: new Date().toISOString(),
         path: request.url,
       });
-    
   }
 }
 
