@@ -1,6 +1,7 @@
 import { ArgumentsHost, Catch, ExceptionFilter, HttpStatus } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { MongoError } from 'mongodb';
+import { MongoErrorCodes } from 'src/enums/mongo-error-codes.enum';
 
 @Catch(MongoError)
 export class MongooseFilter implements ExceptionFilter {
@@ -11,7 +12,7 @@ export class MongooseFilter implements ExceptionFilter {
     const status = parseFloat(`${exception.code}`);
     
     response
-      .status(MongoErrorStatus.get(status))
+      .status(MongoErrorHttpStatusMap.get(status))
       .json({
         statusCode: status,
         timestamp: new Date().toISOString(),
@@ -22,6 +23,6 @@ export class MongooseFilter implements ExceptionFilter {
 }
 
 
-export const MongoErrorStatus = new Map([
-  [11000, HttpStatus.CONFLICT]
+export const MongoErrorHttpStatusMap = new Map([
+  [MongoErrorCodes.DuplicateKey, HttpStatus.CONFLICT]
 ])
