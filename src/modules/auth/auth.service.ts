@@ -14,6 +14,10 @@ export class AuthService {
   async createAccount(user): Promise<IUser> {
     return await this.userModel.create(user);
   }
+  
+  async removeAccount(user): Promise<IUser> {
+    return await this.userModel.remove(user);
+  }
 
   localLogin() {
     

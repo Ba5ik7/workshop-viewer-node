@@ -16,6 +16,12 @@ export class AuthController {
     return this.authService.createAccount(user);
   }
 
+  @Post('local/delete-account')
+  @UseFilters(MongooseFilter)
+  removeAccount(@Body() user): Promise<IUser> {
+    return this.authService.removeAccount(user);
+  }
+
   @Post('local/login')
   localLogin() {
     this.authService.localLogin();
