@@ -24,7 +24,7 @@ export class AuthController {
 
   @Post('local/login')
   localLogin(@Body() user): Promise<IUser>  {
-    return this.authService.localLogin(user);
+    return this.authService.validateUser(user);
   }
 
   @Post('logout')

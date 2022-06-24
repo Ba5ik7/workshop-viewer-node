@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { IUser } from './interfaces/user.interface';
@@ -19,13 +19,13 @@ export class AuthService {
     return await this.userModel.remove(user);
   }
 
-  async localLogin(user: IUser): Promise<IUser> {
+  async validateUser(user: IUser): Promise<IUser> {
     const userResult = await this.userModel.findOne({ email: user.email });
     if (userResult && userResult.password === user.password) {
       const { password, ...result } = userResult;
       return result;
     }
-    return null;
+    return userResult;
   }
 
   logout() {
