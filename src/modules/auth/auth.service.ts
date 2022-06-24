@@ -19,14 +19,18 @@ export class AuthService {
     return await this.userModel.remove(user);
   }
 
-  localLogin() {
-    
+  async localLogin(user: IUser): Promise<IUser> {
+    const userResult = await this.userModel.findOne({ email: user.email });
+    if (userResult && userResult.password === user.password) {
+      const { password, ...result } = userResult;
+      return result;
+    }
+    return null;
   }
 
   logout() {
   }
 
   refresh() {
-
   }
 }
