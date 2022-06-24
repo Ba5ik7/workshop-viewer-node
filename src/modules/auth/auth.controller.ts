@@ -23,8 +23,8 @@ export class AuthController {
   }
 
   @Post('local/login')
-  localLogin() {
-    this.authService.localLogin();
+  localLogin(@Body() user): Promise<IUser>  {
+    return this.authService.localLogin(user);
   }
 
   @Post('logout')
