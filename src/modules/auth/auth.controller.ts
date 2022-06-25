@@ -1,6 +1,7 @@
-import { Body, Controller, Post, UseFilters } from '@nestjs/common';
+import { Body, Controller, Post, Request, UseFilters, UseGuards } from '@nestjs/common';
 import { MongooseFilter } from 'src/filters/mongoose.filter';
 import { AuthService } from './auth.service';
+import { LocalAuthGuard } from './guards/local-auth.guard';
 import { IUser } from './interfaces/user.interface';
 
 @Controller('auth')
@@ -22,9 +23,10 @@ export class AuthController {
     return this.authService.removeAccount(user);
   }
 
+  @UseGuards(LocalAuthGuard)
   @Post('local/login')
-  localLogin(@Body() user): Promise<IUser>  {
-    return this.authService.validateUser(user);
+  localLogin(@Request() req): IUser  {
+    return req.user;
   }
 
   @Post('logout')

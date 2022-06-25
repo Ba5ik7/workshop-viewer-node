@@ -19,13 +19,13 @@ export class AuthService {
     return await this.userModel.remove(user);
   }
 
-  async validateUser(user: IUser): Promise<IUser> {
-    const userResult = await this.userModel.findOne({ email: user.email });
-    if (userResult && userResult.password === user.password) {
-      const { password, ...result } = userResult;
-      return result;
+  async validateUser(email: string, password: string): Promise<any> {
+    const user = await this.userModel.findOne({ email });
+    if (user && user.password === password) {
+      const { _id } = user;
+      return { _id };
     }
-    return userResult;
+    return null;
   }
 
   logout() {
