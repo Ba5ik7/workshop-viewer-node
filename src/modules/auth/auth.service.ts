@@ -1,4 +1,5 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { IUser } from './interfaces/user.interface';
@@ -8,7 +9,8 @@ import { User, UserDocument } from './schemas/user.schema';
 export class AuthService {
   
   constructor(
-    @InjectModel(User.name) private userModel: Model<UserDocument>
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    private jwtService: JwtService
   ) {}
   
   async createAccount(user): Promise<IUser> {
@@ -22,10 +24,17 @@ export class AuthService {
   async validateUser(email: string, password: string): Promise<any> {
     const user = await this.userModel.findOne({ email });
     if (user && user.password === password) {
-      const { _id } = user;
-      return { _id };
+      const { _id, email } = user;
+      return { _id, email };
     }
     return null;
+  }
+
+  async login(user: IUser): Promise<{ [key: string]: string }>  {
+    const payload = { email: user.email, sub: user._id };
+    return {
+      access_token: this.jwtService.sign(payload),
+    };
   }
 
   logout() {

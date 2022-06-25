@@ -1,6 +1,7 @@
-import { Body, Controller, Post, Request, UseFilters, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Request, UseFilters, UseGuards } from '@nestjs/common';
 import { MongooseFilter } from 'src/filters/mongoose.filter';
 import { AuthService } from './auth.service';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { IUser } from './interfaces/user.interface';
 
@@ -25,8 +26,14 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post('local/login')
-  localLogin(@Request() req): IUser  {
-    return req.user;
+  localLogin(@Request() req): Promise<{ [key: string]: string }>  {
+    return this.authService.login(req.user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('local/hello')
+  hello(): string {
+    return 'HEllo there!!!';
   }
 
   @Post('logout')
