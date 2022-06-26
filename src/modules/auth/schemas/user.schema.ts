@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
+import { Document } from 'mongoose';
+import * as bcrypt from 'bcrypt';
 
 export type UserDocument = User & Document;
 
@@ -40,6 +41,13 @@ export class User {
 
 }
 
+export const UserSchema = SchemaFactory.createForClass(User);
+
+UserSchema.pre('save', async function() {
+  const hash = await bcrypt.hash(this.password, 10);
+  this.password = hash;
+});
+
 /**
  * A regular expression that matches valid e-mail addresses.
  *
@@ -70,8 +78,5 @@ export class User {
  *
  * See [this commit](https://github.com/angular/angular.js/commit/f3f5cf72e) for more details.
  */
- const EMAIL_REGEXP =
+const EMAIL_REGEXP =
  /^(?=.{1,254}$)(?=.{1,64}@)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-
-
-export const UserSchema = SchemaFactory.createForClass(User);
