@@ -29,12 +29,14 @@ export class User {
     default: () => Date.now()
   })
   createdAt: Date
-
   
   @Prop({
     default: () => Date.now()
   })
   updatedAt: Date
+
+  @Prop()
+  refreshToken: string
 
 }
 
