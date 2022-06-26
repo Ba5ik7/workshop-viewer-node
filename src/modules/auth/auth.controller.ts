@@ -18,6 +18,7 @@ export class AuthController {
     return this.authService.createAccount(user);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('local/delete-account')
   @UseFilters(MongooseFilter)
   removeAccount(@Body() user): Promise<IUser> {
