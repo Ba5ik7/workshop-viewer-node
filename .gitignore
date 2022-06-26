@@ -36,3 +36,4 @@ lerna-debug.log*
 
 # Mongodb Connection
 mongodbPw.json
+.env

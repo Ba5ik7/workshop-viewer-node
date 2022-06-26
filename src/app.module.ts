@@ -6,12 +6,21 @@ import { AppService } from './app.service';
 import { NavigationModule } from './modules/navigation/navigation.module';
 import { WorkshopModule } from './modules/workshop/workshop.module';
 import { AuthModule } from './modules/auth/auth.module';
-
-import * as mongodbPw from '../mongodbPw.json';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(`mongodb://${mongodbPw.user}:${mongodbPw.pw}@${mongodbPw.ip}:${mongodbPw.port}/workshop-viewer`),
+    ConfigModule.forRoot({
+      cache: true,
+      isGlobal: true,
+    }),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (config: ConfigService) => ({
+        uri: config.get<string>('MONGODB_URI'),
+      })
+    }),
     NavigationModule,
     WorkshopModule,
     AuthModule
