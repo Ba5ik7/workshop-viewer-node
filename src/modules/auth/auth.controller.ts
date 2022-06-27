@@ -27,8 +27,10 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post('local/login')
-  localLogin(@Request() req): Promise<{ [key: string]: string }>  {
-    return this.authService.login(req.user);
+  async localLogin(@Request() req): Promise<{ [key: string]: string }>  {
+    const tokens = await this.authService.login(req.user);
+    await this.authService.setCurrentRefreshToken(tokens.refreshAccessToken, tokens._id);
+    return tokens;
   }
 
   @UseGuards(JwtAuthGuard)

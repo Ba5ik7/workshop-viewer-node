@@ -15,8 +15,8 @@ import { ConfigService } from '@nestjs/config';
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
-        secret: configService.get<string>('JWT_SECRET'),
-        signOptions: { expiresIn: '30s' }
+        secret: configService.get<string>('JWT_ACCESS_TOKEN_SECRET'),
+        signOptions: { expiresIn: `${configService.get<string>('JWT_ACCESS_TOKEN_EXPIRATION_TIME')}s` }
       })
     }),
     MongooseModule.forFeature([
