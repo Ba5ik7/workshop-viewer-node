@@ -5,13 +5,15 @@ import { Model } from 'mongoose';
 import { IUser } from './interfaces/user.interface';
 import { User, UserDocument } from './schemas/user.schema';
 import * as bcrypt from 'bcrypt';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
   
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private configService: ConfigService
   ) {}
   
   async createAccount(user): Promise<IUser> {
@@ -35,9 +37,23 @@ export class AuthService {
 
   async login(user: IUser): Promise<{ [key: string]: string }>  {
     const payload = { email: user.email, sub: user._id };
+    
+    const tokenOptions = {
+      secret: this.configService.get<string>('JWT_ACCESS_TOKEN_SECRET'),
+      expiresIn: this.configService.get<string>('JWT_ACCESS_TOKEN_EXPIRATION_TIME')
+    };
+    const accessToken = this.jwtService.sign(payload);
+
+    const refreshTokenOptions = {
+      secret: this.configService.get<string>('JWT_REFRESH_TOKEN_SECRET'),
+      expiresIn: this.configService.get<string>('JWT_REFRESH_TOKEN_EXPIRATION_TIME')
+    };
+    const refreshAccessToken = this.jwtService.sign(payload, refreshTokenOptions);
+    
     return {
       uesrId: user._id,
-      accessToken: this.jwtService.sign(payload),
+      accessToken,
+      refreshAccessToken
     };
   }
 
@@ -46,4 +62,10 @@ export class AuthService {
 
   refresh() {
   }
+
+  async setCurrentRefreshToken(refreshToken: string, _id: string) {
+    const hashRefreshToken = await bcrypt.hash(refreshToken, 10);
+    await this.userModel.updateOne({ _id }, { refreshToken: hashRefreshToken });
+  }
+ 
 }
