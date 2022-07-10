@@ -1,0 +1,19 @@
+[{
+  "_id": {
+    "$oid": "62b8eb59c90c97beadf82dd2"
+  },
+  "email": "dusellfam@gmail.com",
+  "password": "$2b$10$hE/yebqmtAmaNxIMbKMp0.zClNoRm.eyomD5zno7L16AhVMtpbOiG",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1656286041115"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1656286041115"
+    }
+  },
+  "__v": 0,
+  "refreshToken": "$2b$10$isMJXaCGLDhiN7YnKJ9g8.ZsGXq2GAHlks7PeeQoepOWvDhxV2Vdm"
+}]
