@@ -1,4 +1,5 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Post, Query } from '@nestjs/common';
+import { ICategory } from './interfaces/category.interface';
 import { ISection } from './interfaces/section.interface';
 import { NavigationService } from './navigation.service';
 import { Category } from './schemas/category.schema';
@@ -17,5 +18,13 @@ export class NavigationController {
     @Query('section') section: string
   ): Promise<Category[]> {
     return this.navigationService.findAllCategoriesInSection(section);
+  }
+
+  @Post('category/create-category')
+  async createCategory(
+    @Body() category: ICategory
+  ): Promise<HttpStatus> {
+    await this.navigationService.createCategory(category);
+    return HttpStatus.CREATED;
   }
 }

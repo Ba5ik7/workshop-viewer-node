@@ -12,6 +12,8 @@ export interface IExampleSpecs {
 
 export interface ICategory {
   _id: Types.ObjectId;
+  /** What section this category belongs to */
+  section_id: string;
   /** Id of the doc item. Used in the URL for linking to the doc. */
   id: string;
   /** Display name of the doc item. */
@@ -30,4 +32,8 @@ export interface ICategory {
   overviewPath?: string;
   /** List of additional API docs. */
   additionalApiDocs?: IAdditionalApiDoc[];
+  /** List of documents asscocated with the category */
+  workshopDocuments: string[];
+  /** Last time the workshopDocuments was updated */
+  workshopDocumentsLastUpdated: Date;
 }

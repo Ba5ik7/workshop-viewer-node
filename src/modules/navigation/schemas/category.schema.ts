@@ -26,7 +26,19 @@ export class Category {
   summary: string;
 
   @Prop()
+  packageName: string;
+
+  @Prop()
   exampleSpecs: string;
+
+  @Prop()
+  examples?: string[];
+
+  @Prop()
+  apiDocId?: string;
+
+  @Prop()
+  overviewPath?: string;
 
   @Prop()
   additionalApiDocs: string;
@@ -35,7 +47,7 @@ export class Category {
   workshopDocuments: string[];
 
   @Prop()
-  workshopDocumentsLastUpdated: string;
+  workshopDocumentsLastUpdated: Date;
 }
 
 export const CategorySchema = SchemaFactory.createForClass(Category);
