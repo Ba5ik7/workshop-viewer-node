@@ -6,14 +6,12 @@ export type CategoryDocument = Category & Document;
 
 @Schema()
 export class Category {
-  @Prop()
-  _id: Types.ObjectId;
 
   @Prop()
-  id: string;
+  id?: string;
 
   @Prop()
-  section_id: string;
+  section_id?: string;
   // {
   //   type: mongoose.SchemaType.ObjectId,
   //   ref: 'Section'
@@ -26,10 +24,10 @@ export class Category {
   summary: string;
 
   @Prop()
-  packageName: string;
+  packageName?: string;
 
   @Prop()
-  exampleSpecs: string;
+  exampleSpecs?: string;
 
   @Prop()
   examples?: string[];
@@ -41,13 +39,13 @@ export class Category {
   overviewPath?: string;
 
   @Prop()
-  additionalApiDocs: string;
+  additionalApiDocs?: string;
 
   @Prop()
-  workshopDocuments: string[];
+  workshopDocuments?: string[];
 
   @Prop()
-  workshopDocumentsLastUpdated: Date;
+  workshopDocumentsLastUpdated?: Date;
 }
 
 export const CategorySchema = SchemaFactory.createForClass(Category);
