@@ -23,8 +23,7 @@ export class NavigationController {
   @Post('category/create-category')
   async createCategory(
     @Body() category: ICategory
-  ): Promise<HttpStatus> {
-    await this.navigationService.createCategory(category);
-    return HttpStatus.CREATED;
+  ): Promise<ICategory> {
+    return await this.navigationService.createCategory(category);
   }
 }

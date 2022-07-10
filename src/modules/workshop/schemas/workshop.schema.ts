@@ -5,16 +5,18 @@ export type WorkshopDocument = Workshop & Document;
 
 @Schema()
 export class Workshop {
-  @Prop()
-  _id: Types.ObjectId;
 
-  @Prop()
+  @Prop({ required: true })
   id: string;
 
-  @Prop()
-  lastUpdated: number;
+  @Prop({
+    default: () => Date.now()
+  })
+  lastUpdated: Date;
 
-  @Prop()
+  @Prop({
+    default: () => '<h1>New Workshop</h1>'
+  })
   html: string;  
 }
 

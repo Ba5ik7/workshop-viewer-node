@@ -16,6 +16,10 @@ export class WorkshopService {
     return this.workshopModel.findById(new Types.ObjectId(objectId)).exec();
   }
 
+  async createWorkshop(workshop: IWorkshopDocument): Promise<IWorkshopDocument> {
+    return this.workshopModel.create(workshop);
+  }
+
   async findAll(): Promise<WorkshopDocument[]> {
     return this.workshopModel.find().exec();
   }
