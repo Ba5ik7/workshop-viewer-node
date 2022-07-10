@@ -32,4 +32,11 @@ export class NavigationController {
   ): Promise<ICategory> {
     return await this.navigationService.editCategoryNameAndSummary(category);
   }
+
+  @Post('category/delete-category-and-workshops')
+  async deleteCategoryAndWorkshops(
+    @Body() body: { _id: string } 
+  ): Promise<{ acknowledged: boolean, deletedCount: number }> {
+    return await this.navigationService.deleteCategoryAndWorkshops(body._id);
+  }
 }

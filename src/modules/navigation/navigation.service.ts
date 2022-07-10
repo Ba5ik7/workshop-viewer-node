@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { IWorkshopDocument } from '../workshop/interfaces/workshop.interface';
@@ -52,5 +52,13 @@ export class NavigationService {
       { returnDocument: 'after' }
     );
     return updatedCategory
+  }
+
+  async deleteCategoryAndWorkshops(_id: string): Promise<{ acknowledged: boolean, deletedCount: number }> {
+    const categoryToDelete = await this.categoryModel.findOne({ _id });
+    if(categoryToDelete.workshopDocuments.length > 0) {
+      await this.workshopService.deleteMany(categoryToDelete.workshopDocuments);
+    }
+    return await this.categoryModel.deleteOne({ _id }); 
   }
 }

@@ -23,4 +23,8 @@ export class WorkshopService {
   async findAll(): Promise<WorkshopDocument[]> {
     return this.workshopModel.find().exec();
   }
+
+  async deleteMany(workshopDocuments: string[]) {
+    return await this.workshopModel.deleteMany({ _id: workshopDocuments });
+  }
 }
