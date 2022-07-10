@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { Types } from 'mongoose';
 
 export type CategoryDocument = Category & Document;
 
@@ -8,44 +7,40 @@ export type CategoryDocument = Category & Document;
 export class Category {
 
   @Prop()
-  id?: string;
+  id: string;
 
-  @Prop()
-  section_id?: string;
-  // {
-  //   type: mongoose.SchemaType.ObjectId,
-  //   ref: 'Section'
-  // };
+  @Prop({ required: true })
+  sectionId: string;
 
-  @Prop()
+  @Prop({ required: true })
   name: string;
 
-  @Prop()
+  @Prop({ required: true })
   summary: string;
 
   @Prop()
-  packageName?: string;
+  packageName: string;
 
   @Prop()
-  exampleSpecs?: string;
+  exampleSpecs: string;
 
   @Prop()
-  examples?: string[];
+  examples: string[];
 
   @Prop()
-  apiDocId?: string;
+  apiDocId: string;
 
   @Prop()
-  overviewPath?: string;
+  overviewPath: string;
 
   @Prop()
-  additionalApiDocs?: string;
+  additionalApiDocs: string;
 
   @Prop()
-  workshopDocuments?: string[];
+  workshopDocuments: string[];
 
   @Prop()
-  workshopDocumentsLastUpdated?: Date;
+  workshopDocumentsLastUpdated: Date;
 }
 
 export const CategorySchema = SchemaFactory.createForClass(Category);

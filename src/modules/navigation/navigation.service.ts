@@ -22,7 +22,7 @@ export class NavigationService {
   }
 
   async findAllCategoriesInSection(section: string): Promise<Category[]> {
-    return this.categoryModel.where('section_id').equals(section);
+    return this.categoryModel.where('sectionId').equals(section);
   }
 
   async createCategory(category: ICategory): Promise<Category> {
