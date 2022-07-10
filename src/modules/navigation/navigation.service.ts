@@ -41,4 +41,16 @@ export class NavigationService {
     );
     return updatedCategory
   }
+
+  async editCategoryNameAndSummary(category: ICategory): Promise<ICategory> {
+    const updatedCategory = await this.categoryModel.findByIdAndUpdate<ICategory>(
+      category._id,
+      {
+        name: category.name,
+        summary: category.summary
+      },
+      { returnDocument: 'after' }
+    );
+    return updatedCategory
+  }
 }

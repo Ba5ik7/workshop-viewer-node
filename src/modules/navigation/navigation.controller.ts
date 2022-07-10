@@ -2,7 +2,6 @@ import { Body, Controller, Get, HttpStatus, Post, Query } from '@nestjs/common';
 import { ICategory } from './interfaces/category.interface';
 import { ISection } from './interfaces/section.interface';
 import { NavigationService } from './navigation.service';
-import { Category } from './schemas/category.schema';
 
 @Controller('navigation')
 export class NavigationController {
@@ -16,7 +15,7 @@ export class NavigationController {
   @Get('categories')
   categories(
     @Query('section') section: string
-  ): Promise<Category[]> {
+  ): Promise<ICategory[]> {
     return this.navigationService.findAllCategoriesInSection(section);
   }
 
@@ -25,5 +24,12 @@ export class NavigationController {
     @Body() category: ICategory
   ): Promise<ICategory> {
     return await this.navigationService.createCategory(category);
+  }
+
+  @Post('category/edit-category-name-and-summary')
+  async editCategoryNameAndSummary(
+    @Body() category: ICategory
+  ): Promise<ICategory> {
+    return await this.navigationService.editCategoryNameAndSummary(category);
   }
 }
