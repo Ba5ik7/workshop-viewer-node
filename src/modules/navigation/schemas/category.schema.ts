@@ -12,6 +12,11 @@ export class Category {
   @Prop({ required: true })
   sectionId: string;
 
+  @Prop({
+    default: () => 1
+  })
+  sortId: number;
+
   @Prop({ required: true })
   name: string;
 
