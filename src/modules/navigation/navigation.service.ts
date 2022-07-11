@@ -34,7 +34,7 @@ export class NavigationService {
     const updatedCategory = await this.categoryModel.findByIdAndUpdate<ICategory>(
       newCategory._id,
       {
-        workshopDocuments: [workshop._id],
+        workshopDocuments: [{ _id: workshop._id, name: workshop.name, sortId: workshop.sortId }],
         workshopDocumentsLastUpdated: Date.now()
       },
       { returnDocument: 'after' }

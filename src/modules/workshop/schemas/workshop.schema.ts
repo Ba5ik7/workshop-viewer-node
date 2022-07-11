@@ -10,6 +10,16 @@ export class Workshop {
   id: string;
 
   @Prop({
+    default: () => 'Page'
+  })
+  name: string;
+
+  @Prop({
+    default: () => 1
+  })
+  sortId: number;
+
+  @Prop({
     default: () => Date.now()
   })
   lastUpdated: Date;
