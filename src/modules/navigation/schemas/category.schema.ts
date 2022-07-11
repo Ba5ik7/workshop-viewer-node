@@ -13,7 +13,7 @@ export class Category {
   sectionId: string;
 
   @Prop({
-    default: () => 1
+    default: () => 0
   })
   sortId: number;
 
