@@ -61,4 +61,17 @@ export class NavigationService {
     }
     return await this.categoryModel.deleteOne({ _id }); 
   }
+
+  async sortCategories(categories: ICategory[]): Promise<any> {
+    const newCategories = [];
+    await Promise.all(categories.map(async (category) => {
+      let newCatgory = await this.categoryModel.findByIdAndUpdate<ICategory>(
+        category._id,
+        { sortId: category.sortId },
+        { returnDocument: 'after' }
+      );
+      newCategories.push(newCatgory);
+    }));
+    return newCategories;
+  }
 }

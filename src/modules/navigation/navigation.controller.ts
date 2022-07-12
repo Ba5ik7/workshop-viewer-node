@@ -39,4 +39,11 @@ export class NavigationController {
   ): Promise<{ acknowledged: boolean, deletedCount: number }> {
     return await this.navigationService.deleteCategoryAndWorkshops(body._id);
   }
+
+  @Post('category/sort-categories')
+  async sortCategories(
+    @Body() categories: ICategory[]
+  ): Promise<any> {
+    return await this.navigationService.sortCategories(categories);
+  }
 }
