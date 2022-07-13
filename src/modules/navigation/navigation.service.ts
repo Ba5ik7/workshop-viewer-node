@@ -74,4 +74,19 @@ export class NavigationService {
     }));
     return newCategories;
   }
+
+
+
+  async createPage(page: IWorkshopDocument): Promise<IWorkshopDocument> {
+    const workshop: IWorkshopDocument = await this.workshopService.createWorkshop(page);
+    const updatedCategory = await this.categoryModel.findByIdAndUpdate<ICategory>(
+      page.category._id,
+      {
+        $push: { workshopDocuments: { _id: workshop._id, name: workshop.name, sortId: workshop.sortId }},
+        workshopDocumentsLastUpdated: Date.now()
+      },
+      { returnDocument: 'after' }
+    );
+    return updatedCategory
+  }
 }
