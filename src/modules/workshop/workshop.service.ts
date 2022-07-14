@@ -24,7 +24,11 @@ export class WorkshopService {
     return this.workshopModel.find().exec();
   }
 
-  async deleteMany(workshopDocuments: string[]) {
+  async deleteMany(workshopDocuments: IWorkshopDocument[]) {
     return await this.workshopModel.deleteMany({ _id: workshopDocuments });
+  }
+
+  async deleteOne(_id: string) {
+    return await this.workshopModel.deleteOne({ _id });
   }
 }

@@ -1,5 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { IWorkshopDocument } from 'src/modules/workshop/interfaces/workshop.interface';
+import { WorkshopDocument } from 'src/modules/workshop/schemas/workshop.schema';
+import { ICategory } from '../interfaces/category.interface';
 
 export type CategoryDocument = Category & Document;
 
@@ -42,7 +45,7 @@ export class Category {
   additionalApiDocs: string;
 
   @Prop()
-  workshopDocuments: string[];
+  workshopDocuments: WorkshopDocument[];
 
   @Prop()
   workshopDocumentsLastUpdated: Date;

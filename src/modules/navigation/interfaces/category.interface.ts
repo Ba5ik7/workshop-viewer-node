@@ -1,4 +1,5 @@
 import { Types } from 'mongoose';
+import { IWorkshopDocument } from 'src/modules/workshop/interfaces/workshop.interface';
 
 export interface IAdditionalApiDoc {
   name?: string;
@@ -11,7 +12,7 @@ export interface IExampleSpecs {
 }
 
 export interface ICategory {
-  _id?: Types.ObjectId;
+  _id?: string;
   /** What section this category belongs to */
   section_id?: string;
   /** Id of the doc item. Used in the URL for linking to the doc. */
@@ -34,7 +35,7 @@ export interface ICategory {
   /** List of additional API docs. */
   additionalApiDocs?: string;
   /** List of documents asscocated with the category */
-  workshopDocuments?: string[];
+  workshopDocuments?: IWorkshopDocument[];
   /** Last time the workshopDocuments was updated */
   workshopDocumentsLastUpdated?: Date;
 }

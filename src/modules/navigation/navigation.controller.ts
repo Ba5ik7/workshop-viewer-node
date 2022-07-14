@@ -54,4 +54,11 @@ export class NavigationController {
   ): Promise<IWorkshopDocument> {
     return await this.navigationService.createPage(page);
   }
+
+  @Post('page/delete-page-and-update-category')
+  async deletePageAndUpdateCategory(
+    @Body() page: IWorkshopDocument
+  ): Promise<{ acknowledged: boolean, deletedCount: number }>  {
+    return await this.navigationService.deletePageAndUpdateCategory(page._id, page.category._id);
+  }
 }

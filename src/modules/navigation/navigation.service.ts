@@ -1,6 +1,6 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { IWorkshopDocument } from '../workshop/interfaces/workshop.interface';
 import { WorkshopService } from '../workshop/workshop.service';
 import { ICategory } from './interfaces/category.interface';
@@ -88,5 +88,16 @@ export class NavigationService {
       { returnDocument: 'after' }
     );
     return updatedCategory
+  }
+
+  async deletePageAndUpdateCategory(_id: string, sectionIdToUpdate: string): Promise<{ acknowledged: boolean, deletedCount: number }> {
+    await this.categoryModel.findByIdAndUpdate<ICategory>(
+      sectionIdToUpdate,
+      {
+        $pull: { workshopDocuments: { _id: new Types.ObjectId(_id)  }},
+        workshopDocumentsLastUpdated: Date.now()
+      }
+    );
+    return await this.workshopService.deleteOne(_id); 
   }
 }

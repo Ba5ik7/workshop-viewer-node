@@ -2,7 +2,7 @@ import { Types } from 'mongoose';
 import { ICategory } from 'src/modules/navigation/interfaces/category.interface';
 
 export interface IWorkshopDocument {
-  _id?: Types.ObjectId;
+  _id?: string;
   id?: string;
   category?: ICategory;
   sortId?: number;
