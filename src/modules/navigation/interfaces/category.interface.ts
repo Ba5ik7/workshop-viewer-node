@@ -1,6 +1,3 @@
-import { Types } from 'mongoose';
-import { IWorkshopDocument } from 'src/modules/workshop/interfaces/workshop.interface';
-
 export interface IAdditionalApiDoc {
   name?: string;
   path?: string;
@@ -9,6 +6,12 @@ export interface IAdditionalApiDoc {
 export interface IExampleSpecs {
   prefix?: string;
   exclude?: string[];
+}
+
+export interface CategoryWorkshopDocument {
+  _id?: string;
+  name?: string;
+  sortId: number;
 }
 
 export interface ICategory {
@@ -35,7 +38,7 @@ export interface ICategory {
   /** List of additional API docs. */
   additionalApiDocs?: string;
   /** List of documents asscocated with the category */
-  workshopDocuments?: IWorkshopDocument[];
+  workshopDocuments?: CategoryWorkshopDocument[];
   /** Last time the workshopDocuments was updated */
   workshopDocumentsLastUpdated?: Date;
 }

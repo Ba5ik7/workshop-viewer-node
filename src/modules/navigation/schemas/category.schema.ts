@@ -1,14 +1,13 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { IWorkshopDocument } from 'src/modules/workshop/interfaces/workshop.interface';
-import { WorkshopDocument } from 'src/modules/workshop/schemas/workshop.schema';
-import { ICategory } from '../interfaces/category.interface';
+import { CategoryWorkshopDocument } from '../interfaces/category.interface';
 
 export type CategoryDocument = Category & Document;
 
 @Schema()
 export class Category {
 
+  // todo this needs to be unique and handle FE errors
   @Prop()
   id: string;
 
@@ -45,7 +44,7 @@ export class Category {
   additionalApiDocs: string;
 
   @Prop()
-  workshopDocuments: WorkshopDocument[];
+  workshopDocuments: CategoryWorkshopDocument[];
 
   @Prop()
   workshopDocumentsLastUpdated: Date;
