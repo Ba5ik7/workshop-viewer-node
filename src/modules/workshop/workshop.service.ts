@@ -31,4 +31,10 @@ export class WorkshopService {
   async deleteOne(_id: string) {
     return await this.workshopModel.deleteOne({ _id });
   }
+
+  async updateWorkshopName(_id: any, name: any): Promise<IWorkshopDocument> {
+    return await this.workshopModel.findByIdAndUpdate<IWorkshopDocument>(
+      _id, { name }, { returnDocument: 'before' }
+    );
+  }
 }

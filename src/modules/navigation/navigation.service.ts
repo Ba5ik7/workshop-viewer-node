@@ -90,14 +90,30 @@ export class NavigationService {
     return updatedCategory
   }
 
-  async deletePageAndUpdateCategory(_id: string, sectionIdToUpdate: string): Promise<{ acknowledged: boolean, deletedCount: number }> {
+  async deletePageAndUpdateCategory(_id: string, categoryIdToUpdate: string): Promise<{ acknowledged: boolean, deletedCount: number }> {
     await this.categoryModel.findByIdAndUpdate<ICategory>(
-      sectionIdToUpdate,
+      categoryIdToUpdate,
       {
         $pull: { workshopDocuments: { _id: new Types.ObjectId(_id)  }},
         workshopDocumentsLastUpdated: Date.now()
       }
     );
     return await this.workshopService.deleteOne(_id); 
+  }
+
+  async editPageNameUpdateCategory({ _id, name, category }: IWorkshopDocument): Promise<IWorkshopDocument> {
+    const oldWorkshop = await this.workshopService.updateWorkshopName(_id, name);
+    const id = new Types.ObjectId(_id)
+    const newCategoryWorkshopDocument = { _id: id, name, sortId: oldWorkshop.sortId };
+    const oldCategoryWorkshopDocument = { _id: id, name: oldWorkshop.name, sortId: oldWorkshop.sortId };
+    return await this.categoryModel.findByIdAndUpdate<ICategory>(
+      category._id,
+      { $set: { 'workshopDocuments.$[elem]': newCategoryWorkshopDocument } },
+      {
+        arrayFilters: [{ elem: { $eq: oldCategoryWorkshopDocument }}],
+        multi: true,
+        returnDocument: 'after'
+      }
+    );
   }
 }
