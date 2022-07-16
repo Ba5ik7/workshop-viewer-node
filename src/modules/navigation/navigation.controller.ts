@@ -73,7 +73,7 @@ export class NavigationController {
   async sortPages(
     @Body() pages: CategoryWorkshopDocument[],
     @Query('categoryId') categoryId: string
-  ): Promise<any> {
+  ): Promise<ICategory> {
     return await this.navigationService.sortPages(pages, categoryId);
   }
 }
