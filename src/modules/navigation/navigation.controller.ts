@@ -1,6 +1,6 @@
 import { Body, Controller, Get, HttpStatus, Post, Query } from '@nestjs/common';
 import { IWorkshopDocument } from '../workshop/interfaces/workshop.interface';
-import { ICategory } from './interfaces/category.interface';
+import { CategoryWorkshopDocument, ICategory } from './interfaces/category.interface';
 import { ISection } from './interfaces/section.interface';
 import { NavigationService } from './navigation.service';
 
@@ -67,5 +67,13 @@ export class NavigationController {
     @Body() page: IWorkshopDocument
   ): Promise<ICategory> {
     return await this.navigationService.editPageNameUpdateCategory(page);
+  }
+
+  @Post('page/sort-pages')
+  async sortPages(
+    @Body() pages: CategoryWorkshopDocument[],
+    @Query('categoryId') categoryId: string
+  ): Promise<any> {
+    return await this.navigationService.sortPages(pages, categoryId);
   }
 }

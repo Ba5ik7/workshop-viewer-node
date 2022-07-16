@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { IWorkshopDocument } from '../workshop/interfaces/workshop.interface';
 import { WorkshopService } from '../workshop/workshop.service';
-import { ICategory } from './interfaces/category.interface';
+import { CategoryWorkshopDocument, ICategory } from './interfaces/category.interface';
 import { ISection } from './interfaces/section.interface';
 import { Category, CategoryDocument } from './schemas/category.schema';
 import { Section, SectionDocument } from './schemas/section.schema';
@@ -114,6 +114,17 @@ export class NavigationService {
         multi: true,
         returnDocument: 'after'
       }
+    );
+  }
+
+  async sortPages(pages: CategoryWorkshopDocument[], categoryId: string): Promise<ICategory> {
+    return await this.categoryModel.findByIdAndUpdate<ICategory>(
+      categoryId,
+      {
+        workshopDocuments: pages,
+        workshopDocumentsLastUpdated: Date.now()
+      },
+      { returnDocument: 'after' }
     );
   }
 }
