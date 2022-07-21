@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { IWorkshopDocument } from './interfaces/workshop.interface';
 import { WorkshopService } from './workshop.service';
 
@@ -16,4 +16,12 @@ export class WorkshopController {
   workshop(@Param('objectId') objectId): Promise<IWorkshopDocument> {
     return this.workshopService.getWorkshop(objectId);
   }
+
+  @Post('update-workshop-html')
+  async updateWorkshopHtml(
+    @Body() { html, _id }: { html: string, _id: string }
+  ): Promise<IWorkshopDocument> {
+    return await this.workshopService.updateWorkshopHtml(_id, html);
+  }
+
 }

@@ -37,4 +37,10 @@ export class WorkshopService {
       _id, { name }, { returnDocument: 'before' }
     );
   }
+
+  async updateWorkshopHtml(_id: any, html: string): Promise<IWorkshopDocument> {
+    return await this.workshopModel.findByIdAndUpdate<IWorkshopDocument>(
+      _id, { html }, { returnDocument: 'after' }
+    );
+  }
 }

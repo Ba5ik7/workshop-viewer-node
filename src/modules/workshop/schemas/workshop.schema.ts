@@ -25,9 +25,25 @@ export class Workshop {
   lastUpdated: Date;
 
   @Prop({
-    default: () => '<h1>New Workshop</h1>'
+    default: () => JSON.stringify(defaultWorkshopHtml)
   })
   html: string;  
 }
 
 export const WorkshopSchema = SchemaFactory.createForClass(Workshop);
+
+
+const defaultWorkshopHtml = {
+  time: 1658348554122,
+  blocks: [
+    {
+      id: 'nFdjn4e1md',
+      type: 'header',
+      data: {
+        text: 'Create a Magical Workshop&nbsp;🪄',
+        level: 1
+      }
+    }
+  ],
+  version: '2.25.0'
+}
