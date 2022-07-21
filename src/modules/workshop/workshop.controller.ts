@@ -12,9 +12,14 @@ export class WorkshopController {
     return this.workshopService.findAll();
   }
 
-  @Get('workshops/:objectId')
+  @Get(':objectId')
   workshop(@Param('objectId') objectId): Promise<IWorkshopDocument> {
     return this.workshopService.getWorkshop(objectId);
+  }
+
+  @Get('html/:objectId')
+  workshopHtml(@Param('objectId') objectId): Promise<IWorkshopDocument> {
+    return this.workshopService.getWorkshopHtml(objectId);
   }
 
   @Post('update-workshop-html')

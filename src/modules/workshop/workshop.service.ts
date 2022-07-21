@@ -5,6 +5,9 @@ import { IWorkshopDocument } from './interfaces/workshop.interface';
 import { Workshop, WorkshopDocument } from './schemas/workshop.schema';
 import { Types } from 'mongoose';
 
+import * as edjsHTML from 'editorjs-html';
+const edjsHTMLPaser = edjsHTML();
+
 @Injectable()
 export class WorkshopService {
 
@@ -14,6 +17,22 @@ export class WorkshopService {
 
   async getWorkshop(objectId): Promise<IWorkshopDocument> {
     return this.workshopModel.findById(new Types.ObjectId(objectId)).exec();
+  }
+
+  async getWorkshopHtml(objectId): Promise<IWorkshopDocument> {
+    const workshopWithHtml = await this.workshopModel.findById(new Types.ObjectId(objectId)).exec();
+    const parsedJsonCleanData = JSON.parse(workshopWithHtml.html);
+    const parsedHtmlCleanData = edjsHTMLPaser.parse(parsedJsonCleanData).join('');
+    console.log({
+      parsedHtmlCleanData
+    });
+    
+    workshopWithHtml.html = parsedHtmlCleanData;
+    console.log({
+      workshopWithHtml
+    });
+    
+    return workshopWithHtml;
   }
 
   async createWorkshop(workshop: IWorkshopDocument): Promise<IWorkshopDocument> {
