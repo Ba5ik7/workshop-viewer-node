@@ -23,15 +23,7 @@ export class WorkshopService {
     const workshopWithHtml = await this.workshopModel.findById(new Types.ObjectId(objectId)).exec();
     const parsedJsonCleanData = JSON.parse(workshopWithHtml.html);
     const parsedHtmlCleanData = edjsHTMLPaser.parse(parsedJsonCleanData).join('');
-    console.log({
-      parsedHtmlCleanData
-    });
-    
     workshopWithHtml.html = parsedHtmlCleanData;
-    console.log({
-      workshopWithHtml
-    });
-    
     return workshopWithHtml;
   }
 
