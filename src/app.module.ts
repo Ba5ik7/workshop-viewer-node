@@ -7,6 +7,7 @@ import { NavigationModule } from './modules/navigation/navigation.module';
 import { WorkshopModule } from './modules/workshop/workshop.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ChatModule } from './modules/chat/chat.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     }),
     NavigationModule,
     WorkshopModule,
-    AuthModule
+    AuthModule,
+    ChatModule
   ],
   controllers: [AppController],
   providers: [AppService],
