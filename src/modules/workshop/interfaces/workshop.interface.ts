@@ -1,5 +1,5 @@
 import { Types } from 'mongoose';
-import { ICategory } from 'src/modules/navigation/interfaces/category.interface';
+import { ICategory } from '../../navigation/interfaces/category.interface';
 
 export interface IWorkshopDocument {
   _id?: string;

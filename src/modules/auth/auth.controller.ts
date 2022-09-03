@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post, Request, UseFilters, UseGuards } from '@nestjs/common';
-import { MongooseFilter } from 'src/filters/mongoose.filter';
+import { MongooseFilter } from '../../filters/mongoose.filter';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
