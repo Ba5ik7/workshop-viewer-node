@@ -4,8 +4,7 @@ import { WorkshopService } from './workshop.service';
 
 @Controller('workshop')
 export class WorkshopController {
-
-  constructor(private workshopService: WorkshopService){}
+  constructor(private workshopService: WorkshopService) {}
 
   @Get('workshops')
   workshops(): Promise<IWorkshopDocument[]> {
@@ -24,9 +23,8 @@ export class WorkshopController {
 
   @Post('update-workshop-html')
   async updateWorkshopHtml(
-    @Body() { html, _id }: { html: string, _id: string }
+    @Body() { html, _id }: { html: string; _id: string },
   ): Promise<IWorkshopDocument> {
     return await this.workshopService.updateWorkshopHtml(_id, html);
   }
-
 }
