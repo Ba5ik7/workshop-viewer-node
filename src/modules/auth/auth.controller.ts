@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Request, UseFilters, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Request,
+  UseFilters,
+  UseGuards,
+} from '@nestjs/common';
 import { MongooseFilter } from '../../filters/mongoose.filter';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
@@ -7,10 +15,7 @@ import { IUser } from './interfaces/user.interface';
 
 @Controller('auth')
 export class AuthController {
-
-  constructor(
-    private authService: AuthService
-  ) {}
+  constructor(private authService: AuthService) {}
 
   @Post('local/create-account')
   @UseFilters(MongooseFilter)
@@ -27,16 +32,19 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post('local/login')
-  async localLogin(@Request() req): Promise<{ [key: string]: string }>  {
+  async localLogin(@Request() req): Promise<{ [key: string]: string }> {
     const tokens = await this.authService.login(req.user);
-    await this.authService.setCurrentRefreshToken(tokens.refreshAccessToken, tokens._id);
+    await this.authService.setCurrentRefreshToken(
+      tokens.refreshAccessToken,
+      tokens._id,
+    );
     return tokens;
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('local/hello')
-  hello(): string {
-    return 'HEllo there!!!';
+  hello(): any {
+    return { data: 'HEllo there' };
   }
 
   @Post('logout')
