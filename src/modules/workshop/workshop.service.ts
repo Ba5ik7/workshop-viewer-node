@@ -10,9 +10,8 @@ const edjsHTMLPaser = edjsHTML();
 
 @Injectable()
 export class WorkshopService {
-
   constructor(
-    @InjectModel(Workshop.name) private workshopModel: Model<WorkshopDocument>
+    @InjectModel(Workshop.name) private workshopModel: Model<WorkshopDocument>,
   ) {}
 
   async getWorkshop(objectId): Promise<IWorkshopDocument> {
@@ -20,14 +19,20 @@ export class WorkshopService {
   }
 
   async getWorkshopHtml(objectId): Promise<IWorkshopDocument> {
-    const workshopWithHtml = await this.workshopModel.findById(new Types.ObjectId(objectId)).exec();
+    const workshopWithHtml = await this.workshopModel
+      .findById(new Types.ObjectId(objectId))
+      .exec();
     const parsedJsonCleanData = JSON.parse(workshopWithHtml.html);
-    const parsedHtmlCleanData = edjsHTMLPaser.parse(parsedJsonCleanData).join('');
+    const parsedHtmlCleanData = edjsHTMLPaser
+      .parse(parsedJsonCleanData)
+      .join('');
     workshopWithHtml.html = parsedHtmlCleanData;
     return workshopWithHtml;
   }
 
-  async createWorkshop(workshop: IWorkshopDocument): Promise<IWorkshopDocument> {
+  async createWorkshop(
+    workshop: IWorkshopDocument,
+  ): Promise<IWorkshopDocument> {
     return this.workshopModel.create(workshop);
   }
 
@@ -45,13 +50,17 @@ export class WorkshopService {
 
   async updateWorkshopName(_id: any, name: any): Promise<IWorkshopDocument> {
     return await this.workshopModel.findByIdAndUpdate<IWorkshopDocument>(
-      _id, { name }, { returnDocument: 'before' }
+      _id,
+      { name },
+      { returnDocument: 'before' },
     );
   }
 
   async updateWorkshopHtml(_id: any, html: string): Promise<IWorkshopDocument> {
     return await this.workshopModel.findByIdAndUpdate<IWorkshopDocument>(
-      _id, { html }, { returnDocument: 'after' }
+      _id,
+      { html },
+      { returnDocument: 'after' },
     );
   }
 }
