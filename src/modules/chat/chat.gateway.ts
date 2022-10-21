@@ -7,9 +7,9 @@ export class ChatGateway {
   handleMessage(client: Socket, user: string): string {
     console.log({
       client,
-      user
+      user,
     });
-    
+
     return 'Hello world!';
   }
 }

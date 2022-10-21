@@ -41,12 +41,6 @@ export class AuthController {
     return tokens;
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Get('local/hello')
-  hello(): any {
-    return { data: 'HEllo there' };
-  }
-
   @Post('logout')
   logout() {
     this.authService.logout();
@@ -55,5 +49,11 @@ export class AuthController {
   @Post('refresh')
   refresh() {
     this.authService.refresh();
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('is-logged-in')
+  isLoggedIn(): any {
+    return true;
   }
 }

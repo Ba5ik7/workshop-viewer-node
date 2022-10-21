@@ -27,8 +27,7 @@ export class AuthService {
   async validateUser(email: string, password: string): Promise<any> {
     const user = await this.userModel.findOne({ email });
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (user && isMatch) {
+    if (user && (await bcrypt.compare(password, user.password))) {
       const { _id, email } = user;
       return { _id, email };
     }
@@ -38,12 +37,12 @@ export class AuthService {
   async login(user: IUser): Promise<{ [key: string]: string }> {
     const payload = { email: user.email, sub: user._id };
 
-    const tokenOptions = {
-      secret: this.configService.get<string>('JWT_ACCESS_TOKEN_SECRET'),
-      expiresIn: this.configService.get<string>(
-        'JWT_ACCESS_TOKEN_EXPIRATION_TIME',
-      ),
-    };
+    // const tokenOptions = {
+    //   secret: this.configService.get<string>('JWT_ACCESS_TOKEN_SECRET'),
+    //   expiresIn: this.configService.get<string>(
+    //     'JWT_ACCESS_TOKEN_EXPIRATION_TIME',
+    //   ),
+    // };
     const accessToken = this.jwtService.sign(payload);
 
     const refreshTokenOptions = {

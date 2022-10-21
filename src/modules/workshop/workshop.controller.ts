@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { IWorkshopDocument } from './interfaces/workshop.interface';
 import { WorkshopService } from './workshop.service';
 
@@ -21,6 +22,7 @@ export class WorkshopController {
     return this.workshopService.getWorkshopHtml(objectId);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('update-workshop-html')
   async updateWorkshopHtml(
     @Body() { html, _id }: { html: string; _id: string },
