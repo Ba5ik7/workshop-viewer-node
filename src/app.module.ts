@@ -18,12 +18,12 @@ import { ChatModule } from './modules/chat/chat.module';
       inject: [ConfigService],
       useFactory: async (config: ConfigService) => ({
         uri: config.get<string>('MONGODB_URI'),
-      })
+      }),
     }),
     NavigationModule,
     WorkshopModule,
     AuthModule,
-    ChatModule
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [AppService],
