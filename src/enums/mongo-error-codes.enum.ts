@@ -152,5 +152,5 @@ export enum MongoErrorCodes {
   NotMasterOrSecondaryCode = 13436,
   OutOfDiskSpace = 14031,
   KeyTooLong = 17280,
-  MaxError
+  MaxError,
 }
