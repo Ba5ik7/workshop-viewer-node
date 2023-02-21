@@ -24,6 +24,27 @@ export class ChatService {
     this.users[user] = clientId;
   }
 
+  disconnect(clientId: string) {
+    //look up user by clientId:
+    const users = Object.keys(this.users);
+    let userToRemove = '';
+    users.forEach((user) => {
+      if (this.users[user] === clientId) {
+        userToRemove = user;
+        return;
+      }
+    });
+    if (userToRemove) {
+      delete this.users[userToRemove];
+      // remove user from any joined rooms
+      const rooms = Object.keys(this.chatRooms);
+      rooms.forEach((room) => {
+        this.leaveRoom(room, userToRemove);
+      });
+    }
+    return userToRemove;
+  }
+
   joinRoom(room: string, user: string) {
     this.chatRooms[room].users.push(user);
     // sort the users alphabetically
