@@ -17,4 +17,12 @@ export class ChatGateway {
     const user = this.chatService.disconnect(client.id);
     client.broadcast.emit('userLeft', user);
   }
+
+  @SubscribeMessage('joinRoom')
+  handleJoinRoom(client: Socket, data: { user: string; room: string }) {
+    this.chatService.joinRoom(data.room, data.user);
+    client.join(data.room);
+    client.to(data.room).emit('userJoined', data.user);
+    return this.chatService.getChatRoom(data.room);
+  }
 }
