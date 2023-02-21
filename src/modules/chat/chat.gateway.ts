@@ -25,4 +25,11 @@ export class ChatGateway {
     client.to(data.room).emit('userJoined', data.user);
     return this.chatService.getChatRoom(data.room);
   }
+
+  @SubscribeMessage('leaveRoom')
+  handleLeaveRoom(client: Socket, data: { user: string; room: string }) {
+    this.chatService.leaveRoom(data.room, data.user);
+    client.leave(data.room);
+    client.to(data.room).emit('userLeft', data.user);
+  }
 }
