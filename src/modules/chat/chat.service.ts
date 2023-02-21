@@ -11,4 +11,12 @@ export interface ChatRoom {
 }
 
 @Injectable()
-export class ChatService {}
+export class ChatService {
+  users: Record<string, string> = {};
+  chatRooms: Record<string, ChatRoom> = {
+    General: { users: [], messages: [] },
+    Angular: { users: [], messages: [] },
+    NestJS: { users: [], messages: [] },
+    RxJS: { users: [], messages: [] },
+  };
+}
