@@ -24,6 +24,10 @@ export class ChatService {
     this.users[user] = clientId;
   }
 
+  getChatRoom(room: string) {
+    return this.chatRooms[room];
+  }
+
   getChatRooms() {
     const keys = Object.keys(this.chatRooms);
     return keys;
