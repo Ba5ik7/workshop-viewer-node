@@ -24,6 +24,14 @@ export class ChatService {
     this.users[user] = clientId;
   }
 
+  joinRoom(room: string, user: string) {
+    this.chatRooms[room].users.push(user);
+    // sort the users alphabetically
+    this.chatRooms[room].users.sort((a, b) => {
+      return a.toLowerCase() >= b.toLowerCase() ? 1 : -1;
+    });
+  }
+
   getChatRoom(room: string) {
     return this.chatRooms[room];
   }
