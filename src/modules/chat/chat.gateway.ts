@@ -1,6 +1,6 @@
 import { SubscribeMessage, WebSocketGateway } from '@nestjs/websockets';
 import { Socket } from 'socket.io';
-import { ChatService } from './chat.service';
+import { ChatService, Message } from './chat.service';
 
 @WebSocketGateway({ path: '/chat', namespace: 'chat', cors: true })
 export class ChatGateway {
@@ -31,5 +31,18 @@ export class ChatGateway {
     this.chatService.leaveRoom(data.room, data.user);
     client.leave(data.room);
     client.to(data.room).emit('userLeft', data.user);
+  }
+
+  @SubscribeMessage('messageToServer')
+  handleMessageToServer(
+    client: Socket,
+    data: {
+      room: string;
+      message: Message;
+    },
+  ) {
+    this.chatService.addMessage(data.room, data.message);
+    client.to(data.room).emit('messageToClient', data.message);
+    client.emit('messageToClient', data.message);
   }
 }
