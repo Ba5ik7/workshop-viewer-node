@@ -19,4 +19,8 @@ export class ChatService {
     NestJS: { users: [], messages: [] },
     RxJS: { users: [], messages: [] },
   };
+
+  identify(user: string, clientId: string) {
+    this.users[user] = clientId;
+  }
 }
