@@ -32,6 +32,12 @@ export class ChatService {
     });
   }
 
+  leaveRoom(room: string, user: string) {
+    this.chatRooms[room].users = this.chatRooms[room].users.filter(
+      (u) => u !== user,
+    );
+  }
+
   getChatRoom(room: string) {
     return this.chatRooms[room];
   }
