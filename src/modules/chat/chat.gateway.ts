@@ -6,13 +6,15 @@ import { ChatService } from './chat.service';
 export class ChatGateway {
   constructor(private chatService: ChatService) {}
 
-  @SubscribeMessage('message')
-  handleMessage(client: Socket, user: string): string {
-    console.log({
-      client,
-      user,
-    });
+  @SubscribeMessage('identify')
+  async handleIdentify(client: Socket, user: string) {
+    this.chatService.identify(user, client.id);
+    return this.chatService.getChatRooms();
+  }
 
-    return 'Hello world!';
+  @SubscribeMessage('disconnect')
+  async handleDisconnect(client: Socket) {
+    const user = this.chatService.disconnect(client.id);
+    client.broadcast.emit('userLeft', user);
   }
 }
