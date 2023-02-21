@@ -46,4 +46,8 @@ export class ChatService {
     const keys = Object.keys(this.chatRooms);
     return keys;
   }
+
+  addMessage(room: string, message: Message) {
+    this.chatRooms[room].messages.push(message);
+  }
 }
