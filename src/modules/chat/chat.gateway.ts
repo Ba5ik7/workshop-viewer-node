@@ -8,8 +8,6 @@ export class ChatGateway {
 
   @SubscribeMessage('identify')
   async handleIdentify(client: Socket, user: string) {
-    console.error('identify', user, client.id);
-
     this.chatService.identify(user, client.id);
     return this.chatService.getChatRooms();
   }
