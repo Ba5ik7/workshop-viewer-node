@@ -2,12 +2,14 @@ import { SubscribeMessage, WebSocketGateway } from '@nestjs/websockets';
 import { Socket } from 'socket.io';
 import { ChatService, Message } from './chat.service';
 
-@WebSocketGateway({ path: '/chat', namespace: 'chat', cors: true })
+@WebSocketGateway({ namespace: 'chat' })
 export class ChatGateway {
   constructor(private chatService: ChatService) {}
 
   @SubscribeMessage('identify')
   async handleIdentify(client: Socket, user: string) {
+    console.error('identify', user, client.id);
+
     this.chatService.identify(user, client.id);
     return this.chatService.getChatRooms();
   }
