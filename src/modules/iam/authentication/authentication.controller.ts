@@ -25,13 +25,12 @@ export class AuthenticationController {
   async signIn(
     @Res({ passthrough: true }) response: Response,
     @Body() signInDto: SignInDto,
-  ): Promise<{ accessToken: string }> {
-    const accessToken = await this.authService.signIn(signInDto);
-    response.cookie('accessToken', accessToken, {
-      secure: true,
+  ): Promise<void> {
+    const jwt = await this.authService.signIn(signInDto);
+    response.cookie('accessToken', jwt.accessToken, {
+      secure: false,
       httpOnly: true,
       sameSite: true,
     });
-    return this.authService.signIn(signInDto);
   }
 }
