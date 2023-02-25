@@ -11,39 +11,39 @@ export class User {
     unique: true,
     lowercase: true,
     validate: {
-      validator: value => value.match(EMAIL_REGEXP) 
-    }
+      validator: (value) => value.match(EMAIL_REGEXP),
+    },
   })
   email: string;
-  
+
   @Prop({
     required: true,
     minlength: 5,
     validate: {
-      validator: value => value.match(/^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{6,100}$/) 
-    }
+      validator: (value) =>
+        value.match(/^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{6,100}$/),
+    },
   })
   password: string;
 
   @Prop({
     immutable: true,
-    default: () => Date.now()
+    default: () => Date.now(),
   })
-  createdAt: Date
-  
+  createdAt: Date;
+
   @Prop({
-    default: () => Date.now()
+    default: () => Date.now(),
   })
-  updatedAt: Date
+  updatedAt: Date;
 
   @Prop()
-  refreshToken: string
-
+  refreshToken: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
 
-UserSchema.pre('save', async function() {
+UserSchema.pre('save', async function () {
   const hash = await bcrypt.hash(this.password, 10);
   this.password = hash;
 });
@@ -79,4 +79,4 @@ UserSchema.pre('save', async function() {
  * See [this commit](https://github.com/angular/angular.js/commit/f3f5cf72e) for more details.
  */
 const EMAIL_REGEXP =
- /^(?=.{1,254}$)(?=.{1,64}@)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+  /^(?=.{1,254}$)(?=.{1,64}@)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;

@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -63,9 +62,13 @@ export class AuthService {
     };
   }
 
-  logout() {}
+  logout() {
+    console.log('logout');
+  }
 
-  refresh() {}
+  refresh() {
+    console.log('refresh');
+  }
 
   async setCurrentRefreshToken(refreshToken: string, _id: string) {
     const hashRefreshToken = await bcrypt.hash(refreshToken, 10);
