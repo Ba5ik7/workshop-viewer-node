@@ -20,6 +20,7 @@ export class User {
     required: true,
     minlength: 5,
     validate: {
+      // SALT is fucking this up
       validator: (value) =>
         value.match(/^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{6,100}$/),
     },

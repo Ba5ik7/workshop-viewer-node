@@ -1,11 +1,15 @@
 import {
   ConflictException,
+  Inject,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
+import { ConfigType } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { MongoErrorCodes } from '../../../enums/mongo-error-codes.enum';
+import jwtConfig from '../config/jwt.config';
 import { HashingService } from '../hashing/hashing.service';
 import { SignInDto } from './dto/sign-in.dto';
 import { SignUpDto } from './dto/sign-up.dto';
@@ -15,7 +19,10 @@ import { User, UserDocument } from './schemas/user.schema';
 export class AuthenticationService {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
-    private hashService: HashingService,
+    private readonly hashService: HashingService,
+    private readonly jwtService: JwtService,
+    @Inject(jwtConfig.KEY)
+    private readonly jwtConfiguration: ConfigType<typeof jwtConfig>,
   ) {}
 
   async signUp(signUpDto: SignUpDto): Promise<void> {
@@ -33,7 +40,7 @@ export class AuthenticationService {
     }
   }
 
-  async signIn(signInDto: SignInDto): Promise<boolean> {
+  async signIn(signInDto: SignInDto): Promise<{ accessToken: string }> {
     const user = await this.userModel.findOne({ email: signInDto.email });
     if (!user) {
       throw new UnauthorizedException('User not found');
@@ -48,6 +55,18 @@ export class AuthenticationService {
       throw new UnauthorizedException('Invalid password');
     }
 
-    return true;
+    const accessToken = await this.jwtService.signAsync(
+      {
+        sub: user._id,
+        email: user.email,
+      },
+      {
+        audience: this.jwtConfiguration.audience,
+        issuer: this.jwtConfiguration.issuer,
+        secret: this.jwtConfiguration.secret,
+        expiresIn: this.jwtConfiguration.accessTokenTtl,
+      },
+    );
+    return { accessToken };
   }
 }
