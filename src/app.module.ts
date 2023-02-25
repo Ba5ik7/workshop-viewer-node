@@ -8,6 +8,7 @@ import { WorkshopModule } from './modules/workshop/workshop.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ChatModule } from './modules/chat/chat.module';
+import { IamModule } from './modules/iam/iam.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { ChatModule } from './modules/chat/chat.module';
     WorkshopModule,
     AuthModule,
     ChatModule,
+    IamModule,
   ],
   controllers: [AppController],
   providers: [AppService],
