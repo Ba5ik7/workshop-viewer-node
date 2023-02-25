@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Auth } from '../../decorators/auth.decorator';
+import { AuthType } from '../../enums/auth-type.enum';
 import { IWorkshopDocument } from '../workshop/interfaces/workshop.interface';
 import {
   CategoryWorkshopDocument,
@@ -12,23 +13,23 @@ import { NavigationService } from './navigation.service';
 export class NavigationController {
   constructor(private navigationService: NavigationService) {}
 
+  @Auth(AuthType.None)
   @Get('sections')
   sections(): Promise<{ [key: string]: ISection }> {
     return this.navigationService.findAllSections();
   }
 
+  @Auth(AuthType.None)
   @Get('categories')
   categories(@Query('section') section: string): Promise<ICategory[]> {
     return this.navigationService.findAllCategoriesInSection(section);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Post('category/create-category')
   async createCategory(@Body() category: ICategory): Promise<ICategory> {
     return await this.navigationService.createCategory(category);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Post('category/edit-category-name-and-summary')
   async editCategoryNameAndSummary(
     @Body() category: ICategory,
@@ -36,7 +37,6 @@ export class NavigationController {
     return await this.navigationService.editCategoryNameAndSummary(category);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Post('category/delete-category-and-workshops')
   async deleteCategoryAndWorkshops(
     @Body() body: { _id: string },
@@ -44,13 +44,11 @@ export class NavigationController {
     return await this.navigationService.deleteCategoryAndWorkshops(body._id);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Post('category/sort-categories')
   async sortCategories(@Body() categories: ICategory[]): Promise<any> {
     return await this.navigationService.sortCategories(categories);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Post('page/create-page')
   async createPage(
     @Body() page: IWorkshopDocument,
@@ -58,7 +56,6 @@ export class NavigationController {
     return await this.navigationService.createPage(page);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Post('page/delete-page-and-update-category')
   async deletePageAndUpdateCategory(
     @Body() page: IWorkshopDocument,
@@ -69,7 +66,6 @@ export class NavigationController {
     );
   }
 
-  @UseGuards(JwtAuthGuard)
   @Post('page/edit-page-name-update-category')
   async editPageNameUpdateCategory(
     @Body() page: IWorkshopDocument,
@@ -77,7 +73,6 @@ export class NavigationController {
     return await this.navigationService.editPageNameUpdateCategory(page);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Post('page/sort-pages')
   async sortPages(
     @Body() pages: CategoryWorkshopDocument[],
