@@ -10,21 +10,10 @@ export class User {
     required: true,
     unique: true,
     lowercase: true,
-    validate: {
-      validator: (value) => value.match(EMAIL_REGEXP),
-    },
   })
   email: string;
 
-  @Prop({
-    required: true,
-    minlength: 5,
-    validate: {
-      // SALT is fucking this up
-      validator: (value) =>
-        value.match(/^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{6,100}$/),
-    },
-  })
+  @Prop({ required: true })
   password: string;
 
   @Prop({
@@ -79,5 +68,5 @@ export const UserSchema = SchemaFactory.createForClass(User);
  *
  * See [this commit](https://github.com/angular/angular.js/commit/f3f5cf72e) for more details.
  */
-const EMAIL_REGEXP =
-  /^(?=.{1,254}$)(?=.{1,64}@)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+// const EMAIL_REGEXP =
+//   /^(?=.{1,254}$)(?=.{1,64}@)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;

@@ -8,13 +8,9 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 import { AuthenticationService } from './authentication.service';
-import { SignInDto } from './dto/sign-in.dto';
-import { SignUpDto } from './dto/sign-up.dto';
 import { Auth } from '../../../decorators/auth.decorator';
 import { AuthType } from '../../../enums/auth-type.enum';
-// import { ActiveUser } from '../../../decorators/active-user.decorator';
-// import { ActiveUserData } from '../../../interfaces/active-user-data.interface';
-// import { RefreshTokenDto } from './dto/refresh-token.dto';
+import { UserAuthDto } from './dto/user-auth.dto';
 
 const cookieOptions = {
   secure: false,
@@ -30,10 +26,10 @@ export class AuthenticationController {
   @Post('sign-up')
   async signUp(
     @Res({ passthrough: true }) response: Response,
-    @Body() signUpDto: SignUpDto,
+    @Body() userAuthDto: UserAuthDto,
   ) {
-    await this.authService.signUp(signUpDto);
-    const jwt = await this.authService.signIn(signUpDto);
+    await this.authService.signUp(userAuthDto);
+    const jwt = await this.authService.signIn(userAuthDto);
     response.cookie('accessToken', jwt.accessToken, cookieOptions);
   }
 
@@ -41,9 +37,9 @@ export class AuthenticationController {
   @Post('sign-in')
   async signIn(
     @Res({ passthrough: true }) response: Response,
-    @Body() signInDto: SignInDto,
+    @Body() userAuthDto: UserAuthDto,
   ) {
-    const jwt = await this.authService.signIn(signInDto);
+    const jwt = await this.authService.signIn(userAuthDto);
     response.cookie('accessToken', jwt.accessToken, cookieOptions);
     // Let's think about the need of refresh-tokens
     // response.cookie('refreshToken', jwt.refreshToken, cookieOptions);

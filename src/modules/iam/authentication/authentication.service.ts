@@ -14,27 +14,29 @@ import { MongoErrorCodes } from '../../../enums/mongo-error-codes.enum';
 import jwtConfig from '../config/jwt.config';
 import { HashingService } from '../hashing/hashing.service';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
-import { SignInDto } from './dto/sign-in.dto';
-import { SignUpDto } from './dto/sign-up.dto';
 import { User, UserDocument } from './schemas/user.schema';
+import { UserAuthDto } from './dto/user-auth.dto';
 
 @Injectable()
 export class AuthenticationService {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
-    private readonly hashService: HashingService,
-    private readonly jwtService: JwtService,
     @Inject(jwtConfig.KEY)
     private readonly jwtConfiguration: ConfigType<typeof jwtConfig>,
+    private readonly hashService: HashingService,
+    private readonly jwtService: JwtService,
   ) {}
 
-  async signUp(signUpDto: SignUpDto): Promise<void> {
+  async signUp(
+    userAuthDto: UserAuthDto,
+  ): Promise<{ accessToken: string; refreshToken: string }> {
     try {
       const user = new User();
-      user.email = signUpDto.email;
-      user.password = await this.hashService.hash(signUpDto.password);
+      user.email = userAuthDto.email;
+      user.password = await this.hashService.hash(userAuthDto.password);
 
       await this.userModel.create(user);
+      return await this.generateTokens(user);
     } catch (error) {
       if (error.code === MongoErrorCodes.DuplicateKey) {
         throw new ConflictException('Email already exists');
@@ -44,13 +46,13 @@ export class AuthenticationService {
   }
 
   async signIn(
-    signInDto: SignInDto,
+    userAuthDto: UserAuthDto,
   ): Promise<{ accessToken: string; refreshToken: string }> {
-    const user = await this.userModel.findOne({ email: signInDto.email });
+    const user = await this.userModel.findOne({ email: userAuthDto.email });
     if (!user) throw new UnauthorizedException('User not found');
 
     const isPasswordValid = await this.hashService.compare(
-      signInDto.password,
+      userAuthDto.password,
       user.password,
     );
     if (!isPasswordValid) throw new UnauthorizedException('Invalid password');
