@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Post,
@@ -43,6 +44,12 @@ export class AuthenticationController {
     response.cookie('accessToken', jwt.accessToken, cookieOptions);
     // Let's think about the need of refresh-tokens
     // response.cookie('refreshToken', jwt.refreshToken, cookieOptions);
+  }
+
+  @Auth(AuthType.Bearer)
+  @Get('logged-in')
+  isLoggedIn(): boolean {
+    return true;
   }
 
   // Let's think about the need of refresh-tokens
