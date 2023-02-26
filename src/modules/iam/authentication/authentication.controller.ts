@@ -13,17 +13,20 @@ import { SignInDto } from './dto/sign-in.dto';
 import { SignUpDto } from './dto/sign-up.dto';
 import { Auth } from '../../../decorators/auth.decorator';
 import { AuthType } from '../../../enums/auth-type.enum';
+import { ActiveUser } from '../../../decorators/active-user.decorator';
+import { ActiveUserData } from '../../../interfaces/active-user-data.interface';
 
-@Auth(AuthType.None)
 @Controller('authentication')
 export class AuthenticationController {
   constructor(private readonly authService: AuthenticationService) {}
 
+  @Auth(AuthType.None)
   @Post('sign-up')
   async signUp(@Body() signUpDto: SignUpDto): Promise<void> {
     return this.authService.signUp(signUpDto);
   }
 
+  @Auth(AuthType.None)
   @HttpCode(HttpStatus.OK)
   @Post('sign-in')
   async signIn(
@@ -39,7 +42,8 @@ export class AuthenticationController {
   }
 
   @Get('hello')
-  hello(): string {
+  hello(@ActiveUser() user: ActiveUserData): string {
+    console.log({ user });
     return 'Hello World!';
   }
 }
