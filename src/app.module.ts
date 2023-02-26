@@ -5,7 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { NavigationModule } from './modules/navigation/navigation.module';
 import { WorkshopModule } from './modules/workshop/workshop.module';
-import { AuthModule } from './modules/auth/auth.module';
+// import { AuthModule } from './modules/auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ChatModule } from './modules/chat/chat.module';
 import { IamModule } from './modules/iam/iam.module';
@@ -23,7 +23,7 @@ import { IamModule } from './modules/iam/iam.module';
     }),
     NavigationModule,
     WorkshopModule,
-    AuthModule,
+    // AuthModule,
     ChatModule,
     IamModule,
   ],

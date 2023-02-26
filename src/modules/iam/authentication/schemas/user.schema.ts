@@ -27,8 +27,8 @@ export class User {
   })
   updatedAt: Date;
 
-  @Prop()
-  refreshToken: string;
+  // @Prop()
+  // refreshToken: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
