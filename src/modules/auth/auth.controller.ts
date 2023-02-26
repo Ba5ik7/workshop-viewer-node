@@ -11,7 +11,7 @@ import { MongooseFilter } from '../../filters/mongoose.filter';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
-import { IUser } from './interfaces/user.interface';
+import { IUser } from '../../interfaces/user.interface';
 
 @Controller('auth')
 export class AuthController {
