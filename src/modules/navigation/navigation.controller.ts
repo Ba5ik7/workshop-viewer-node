@@ -1,12 +1,12 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { Auth } from '../../decorators/auth.decorator';
 import { AuthType } from '../../enums/auth-type.enum';
-import { IWorkshopDocument } from '../workshop/interfaces/workshop.interface';
+import { IWorkshopDocument } from '../../interfaces/workshop.interface';
 import {
   CategoryWorkshopDocument,
   ICategory,
-} from './interfaces/category.interface';
-import { ISection } from './interfaces/section.interface';
+} from '../../interfaces/category.interface';
+import { ISection } from '../../interfaces/section.interface';
 import { NavigationService } from './navigation.service';
 
 @Controller('navigation')

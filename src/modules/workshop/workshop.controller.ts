@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { Auth } from '../../decorators/auth.decorator';
 import { AuthType } from '../../enums/auth-type.enum';
-import { IWorkshopDocument } from './interfaces/workshop.interface';
+import { IWorkshopDocument } from '../../interfaces/workshop.interface';
 import { WorkshopService } from './workshop.service';
 
 @Controller('workshop')

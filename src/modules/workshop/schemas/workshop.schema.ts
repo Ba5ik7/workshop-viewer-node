@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
+import { Document } from 'mongoose';
 
 export type WorkshopDocument = Workshop & Document;
 
@@ -8,19 +8,13 @@ export class Workshop {
   @Prop({ required: true })
   id: string;
 
-  @Prop({
-    default: () => 'Page',
-  })
+  @Prop({ default: () => 'Page' })
   name: string;
 
-  @Prop({
-    default: () => 0,
-  })
+  @Prop({ default: () => 0 })
   sortId: number;
 
-  @Prop({
-    default: () => Date.now(),
-  })
+  @Prop({ default: () => Date.now() })
   lastUpdated: Date;
 
   @Prop({

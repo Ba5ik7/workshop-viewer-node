@@ -1,11 +1,8 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { NavigationModule } from './modules/navigation/navigation.module';
 import { WorkshopModule } from './modules/workshop/workshop.module';
-// import { AuthModule } from './modules/auth/auth.module';
+// !import { AuthModule } from './modules/auth/auth.module'; // Marked Sunset
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ChatModule } from './modules/chat/chat.module';
 import { IamModule } from './modules/iam/iam.module';
@@ -23,11 +20,9 @@ import { IamModule } from './modules/iam/iam.module';
     }),
     NavigationModule,
     WorkshopModule,
-    // AuthModule,
+    // !AuthModule, // Marked Sunset
     ChatModule,
     IamModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
