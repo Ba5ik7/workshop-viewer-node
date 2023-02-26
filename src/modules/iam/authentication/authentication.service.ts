@@ -67,7 +67,6 @@ export class AuthenticationService {
         expiresIn: this.jwtConfiguration.accessTokenTtl,
       },
     );
-    console.log('accessToken', accessToken);
 
     return { accessToken };
   }

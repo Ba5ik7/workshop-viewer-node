@@ -16,7 +16,7 @@ export class AuthenticationGuard implements CanActivate {
     AuthType,
     CanActivate | CanActivate[]
   > = {
-    [AuthType.Bearer]: [this.accessTokenGuard],
+    [AuthType.Bearer]: this.accessTokenGuard,
     [AuthType.None]: { canActivate: () => true },
   };
 
@@ -34,12 +34,14 @@ export class AuthenticationGuard implements CanActivate {
     const guards = authTypes
       .map((authType) => this.authTypeGuardMap[authType])
       .flat();
-    let error = new UnauthorizedException('Authentication failed');
 
+    let error = new UnauthorizedException('Authentication failed');
     for (const guard of guards) {
       const canActivate = await Promise.resolve(
         guard.canActivate(context),
-      ).catch((e) => (error = e));
+      ).catch((e) => {
+        error = e;
+      });
 
       if (canActivate) return true;
     }

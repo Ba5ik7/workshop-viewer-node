@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Post,
@@ -12,6 +13,7 @@ import { SignInDto } from './dto/sign-in.dto';
 import { SignUpDto } from './dto/sign-up.dto';
 import { Auth } from '../../../decorators/auth.decorator';
 import { AuthType } from '../../../enums/auth-type.enum';
+
 @Auth(AuthType.None)
 @Controller('authentication')
 export class AuthenticationController {
@@ -34,5 +36,10 @@ export class AuthenticationController {
       httpOnly: true,
       sameSite: true,
     });
+  }
+
+  @Get('hello')
+  hello(): string {
+    return 'Hello World!';
   }
 }
