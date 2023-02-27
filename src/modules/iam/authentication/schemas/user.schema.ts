@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { Role } from '../../../../enums/role.enum';
 // import * as bcrypt from 'bcrypt';
 
 export type UserDocument = User & Document;
@@ -22,10 +23,11 @@ export class User {
   })
   createdAt: Date;
 
-  @Prop({
-    default: () => Date.now(),
-  })
+  @Prop({ default: () => Date.now() })
   updatedAt: Date;
+
+  @Prop({ default: () => Role.Regular })
+  role: Role;
 
   // @Prop()
   // refreshToken: string;

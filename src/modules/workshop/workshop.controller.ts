@@ -1,4 +1,6 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Roles } from '../../decorators/role.decorator';
+import { Role } from '../../enums/role.enum';
 import { Auth } from '../../decorators/auth.decorator';
 import { AuthType } from '../../enums/auth-type.enum';
 import { IWorkshopDocument } from '../../interfaces/workshop.interface';
@@ -26,6 +28,7 @@ export class WorkshopController {
     return this.workshopService.getWorkshopHtml(objectId);
   }
 
+  @Roles(Role.Admin)
   @Post('update-workshop-html')
   async updateWorkshopHtml(
     @Body() { html, _id }: { html: string; _id: string },
