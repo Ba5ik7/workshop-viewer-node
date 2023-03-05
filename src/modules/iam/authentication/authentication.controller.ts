@@ -46,9 +46,11 @@ export class AuthenticationController {
     // response.cookie('refreshToken', jwt.refreshToken, cookieOptions);
   }
 
+  @HttpCode(HttpStatus.OK)
   @Get('sign-out')
   async signOut(@Res({ passthrough: true }) response: Response) {
-    return response.clearCookie('accessToken');
+    response.clearCookie('accessToken');
+    response.end();
   }
 
   @Auth(AuthType.Bearer)
