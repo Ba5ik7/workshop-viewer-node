@@ -47,7 +47,7 @@ export class AuthenticationController {
   }
 
   @Auth(AuthType.Bearer)
-  @Get('logged-in')
+  @Get('is-user-logged-in')
   isLoggedIn(): boolean {
     return true;
   }
