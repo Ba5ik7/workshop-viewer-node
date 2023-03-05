@@ -46,6 +46,11 @@ export class AuthenticationController {
     // response.cookie('refreshToken', jwt.refreshToken, cookieOptions);
   }
 
+  @Get('sign-out')
+  async signOut(@Res({ passthrough: true }) response: Response) {
+    return response.clearCookie('accessToken');
+  }
+
   @Auth(AuthType.Bearer)
   @Get('is-user-logged-in')
   isLoggedIn(): boolean {
