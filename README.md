@@ -1,3 +1,7 @@
+
+# <span style="color:red">**⚠️WARNING⚠️ Deprecated**</span>
+Project has migrated to an NX Monorepo https://github.com/Ba5ik7/ngx-workshop
+
 # Workshop Viewer Node
 
 <p align="center">
